@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+	<title>CrystalChocolate</title>
+</head>
+<body>
+  <nav>
+    <div class="nav-wrapper brown darken-3">
+      <a class="logo"><img src="https://image.ibb.co/fm3oPf/logo.png" alt="logo" border="0"  style="height:75%; margin-top:10px; margin-left:5px"></a>
+    </div>
+  </nav>
+  <h3 class="center">CrystalChocolate</h3>
+	<p>A UI for trasparency in the gestion of the project Bit&Nibs</p>
+  <h3> EUR </h3>
+  <p id="tag"><span>€ </span></p>
+
+        <script>
+          const key = require('./keys/key');
+          const secret = require('./keys/secret');
+
+          const KrakenClient = require('./kraken');
+          const kraken = new KrakenClient(key, secret);
+          var message = "null";
+
+          kraken.api('Balance')
+            .then(res => {
+              message = res.result.ZEUR;
+              var tag = document.getElementById('tag');
+              const itemMessage = document.createTextNode(message);
+              tag.appendChild(itemMessage)})
+            .catch(err => console.log(err));
+        </script>
+</body>
+</html>
+
+

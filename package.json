@@ -1,0 +1,24 @@
+{
+  "productName": "CrystalChocolate",
+  "name": "crystalchocolate",
+  "version": "0.1.0",
+  "description": "An electron UI to show the amount of money held by the Bit&Nibs proyect.",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "package-mac": "electron-packager . --overwrite --platform=darwin --arch=x64 --icon=icons/mac/icon.icns --prune=true --out=release-builds",
+    "package-win": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=win32 --arch=ia32 --icon=icons/win/icon.ico --prune=true --out=release-builds --version-string.CompanyName=Bit&Nibs --version-string.FileDescription=CE --version-string.ProductName=\"CrystalChocolate\"",
+    "package-linux": "electron-packager . electron-tutorial-app --overwrite --asar=true --platform=linux --arch=x64 --icon=icons/png/icon.png --prune=true --out=release-builds"
+  },
+  "author": "Proyecto Bit&Nibs / German Lugo",
+  "license": "MIT",
+  "dependencies": {
+    "crypto": "^1.0.1",
+    "electron": "^3.0.7",
+    "got": "^9.3.2",
+    "qs": "^6.5.2"
+  },
+  "devDependencies": {
+    "electron-packager": "^12.2.0"
+  }
+}
