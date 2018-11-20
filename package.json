@@ -14,7 +14,7 @@
   "license": "MIT",
   "dependencies": {
     "crypto": "^1.0.1",
-    "electron": "^3.0.7",
+    "electron": "^3.0.9",
     "got": "^9.3.2",
     "qs": "^6.5.2"
   },
