@@ -15,7 +15,7 @@ $ npm install
 $ npm start
 ```
 
-CrystalChocolate run with electron 3.0.9. If you have already installthe source of a problem to visualize the funds saved in Kraken.com
+CrystalChocolate run with electron 3.0.9. If you have already install electron with another version it could be source of a problem to visualize the funds saved in Kraken.com
 
 ### Development
 
