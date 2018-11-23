@@ -29,7 +29,7 @@ Yes, I know, I should be a better developer, even if I'm giving my best. But my 
 
 ### Invest 💰 in 🍫
 
-We're integrating an ethereum wallet into CrystalChocolate. So if you are willing to participate, but your skills are not good enough yet. You could considerate support the work of other developers. The money from tokens you will buy will be saved in the Kraken acount and eventualy will be given as bounties to the developers who help us to build the chocosfera.com
+We're integrating an ethereum wallet into CrystalChocolate. So if you are willing to participate, but your skills as developer aren't good enough yet, You could considerate support the work of other developers. The money from tokens you will buy will be saved in the Kraken acount and eventualy will be given as bounties to the developers who help us to build the chocosfera.com
 
 ### Characters
 
@@ -37,12 +37,12 @@ We're working thinking that our final customers will not be passives consumers. 
 
 #### Kaoka
 
-[![Kaoka](https://image.ibb.co/irUHSA/final2.png)](https://chocosfera.com)
+[![Kaoka](https://image.ibb.co/kQ39aV/Kaoka.png)](https://chocosfera.com)
 
 #### Tony
 
-[![Tony](https://image.ibb.co/iyfffV/Tony-Minero.png)](https://chocosfera.com)
+[![Tony](https://image.ibb.co/gkBWNA/Tony.png)](https://chocosfera.com)
 
 #### Pipo
 
-[![Pipo](https://image.ibb.co/eBjvEq/2.png)](https://chocosfera.com)
+[![Pipo](https://image.ibb.co/duSVhA/Pipo.png)](https://chocosfera.com)
