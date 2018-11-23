@@ -8,7 +8,7 @@ process.env.NODE_ENV = 'production';
 
 const { app, BrowserWindow, Menu } = electron;
 
-mongoose.connect(db)
+mongoose.connect(db, { useNewUrlParser: true })
   .then(()=> console.log('Mongo_DB connected'))
   .catch(err => console.log(err));
 
