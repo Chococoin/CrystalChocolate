@@ -1,10 +1,16 @@
 const electron = require('electron');
 const url = require('url');
 const path = require('path');
+const mongoose = require('mongoose');
+const db = require('./config/mongodb_access').mongoURI; // DB Config
 
 process.env.NODE_ENV = 'production';
 
 const { app, BrowserWindow, Menu } = electron;
+
+mongoose.connect(db)
+  .then(()=> console.log('Mongo_DB connected'))
+  .catch(err => console.log(err));
 
 let mainWindow;
 
