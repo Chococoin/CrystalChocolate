@@ -13,12 +13,20 @@
   "author": "Proyecto Bit&Nibs / German Lugo",
   "license": "MIT",
   "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.18.3",
     "crypto": "^1.0.1",
     "electron": "^3.0.9",
     "got": "^9.3.2",
-    "qs": "^6.5.2"
+    "jsonwebtoken": "^8.4.0",
+    "mongoose": "^5.3.13",
+    "passport": "^0.4.0",
+    "passport-jwt": "^4.0.0",
+    "qs": "^6.5.2",
+    "validator": "^10.9.0"
   },
   "devDependencies": {
-    "electron-packager": "^12.2.0"
+    "electron-packager": "^12.2.0",
+    "nodemon": "^1.18.6"
   }
 }
