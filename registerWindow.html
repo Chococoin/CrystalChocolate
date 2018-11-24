@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <meta charset="UTF-8">
+    <title>Sing Up</title>
+</head>
+<body>
+    <h3 class="center">Register</h3>
+    <div class="container">
+        <div class="row">
+            <div class="col s2"></div>
+            <form class="col s8">
+            <fieldset>
+                <legend>Sing Up</legend>
+                <label for="username">User</label>
+                <input type="text" name="username" id="user">
+                <label for="firstName">First name</label>
+                <input type="text" name="firstName" id="firstName">
+                <label for="lastName">Last Name</label>
+                <input type="text" name="lastName" id="lastName">
+                <label for="country">Country</label>
+                <input type="text" name="country" id="country">
+                <label for="email">E-mail</label>
+                <input type="text" name="email" id="mail">
+                <label for="password">Password</label>
+                <input type="text" name="password" id="pass">
+                <label for="password2">Repeat Password</label>
+                <input type="text" name="password2" id="pass2">
+                <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitSingUp()">Submit</button>
+            </fieldset>
+            </form>
+            <div class="col s2"></div>
+        </div>
+        <div class="row">
+            <p class="col s6 offset-s4">Already registred? <a href="">Sign In</a></p>
+
+        </div>
+    </div>
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitSingUp);
+
+        function submitSingUp(e){
+            e.preventDefault();
+            const user = document.querySelector('#user').value;
+            const firstName = document.querySelector('#firstName').value;
+            const lastName = document.querySelector('#lastName').value;
+            const email = document.querySelector('#mail').value;
+            const country = document.querySelector('#country').value;
+            const pass = document.querySelector('#pass').value;
+            const pass2 = document.querySelector('#pass2').value;
+            ipcRenderer.send('register:add', {user,
+                                              firstName,
+                                              lastName,
+                                              email,
+                                              country,
+                                              pass,
+                                              pass2
+                                             }
+            );
+        }
+    </script>
+</body>
+</html>
