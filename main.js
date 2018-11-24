@@ -32,7 +32,7 @@ app.on('ready', ()=>{
 });
 
 app.on('ready', ()=>{
-  loginWindow = new BrowserWindow({});
+  loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'loginWindow.html'),
     protocol: 'file',
