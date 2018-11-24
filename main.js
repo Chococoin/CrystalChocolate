@@ -13,6 +13,7 @@ mongoose.connect(db, { useNewUrlParser: true })
   .catch(err => console.log(err));
 
 let mainWindow;
+let loginWindow;
 
 app.on('ready', ()=>{
   mainWindow = new BrowserWindow({});
@@ -29,6 +30,15 @@ app.on('ready', ()=>{
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
 });
+
+app.on('ready', ()=>{
+  loginWindow = new BrowserWindow({});
+  loginWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'loginWindow.html'),
+    protocol: 'file',
+    slashes: true
+  }));
+})
 
 app.setName('CrystalChocolate');
 
