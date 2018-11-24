@@ -14,7 +14,9 @@ mongoose.connect(db, { useNewUrlParser: true })
 
 let mainWindow;
 let loginWindow;
+let registerWindow;
 
+// Create mainrWindow
 app.on('ready', ()=>{
   mainWindow = new BrowserWindow({});
   mainWindow.loadURL(url.format({
@@ -31,6 +33,7 @@ app.on('ready', ()=>{
   Menu.setApplicationMenu(mainMenu);
 });
 
+// Create loginWindow
 app.on('ready', ()=>{
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
@@ -44,6 +47,22 @@ app.on('ready', ()=>{
 ipcMain.on('user:add', (e, data)=> {
   console.log(data.user, data.pass); // Test submitLogin function.
   loginWindow.close();
+});
+
+// Create registerWindow
+app.on('ready', ()=>{
+  registerWindow = new BrowserWindow({ width: 600, height: 500 });
+  registerWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'registerWindow.html'),
+    protocol: 'file',
+    slashes: true
+  }));
+});
+
+// Catch user:add from registerWindow
+ipcMain.on('register:add', (e, data)=> {
+  console.log(data); // Test submitSingUp function.
+  registerWindow.close();
 });
 
 app.setName('CrystalChocolate');
