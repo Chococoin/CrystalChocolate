@@ -40,7 +40,7 @@ app.on('ready', ()=>{
   }));
 });
 
-// Catch user:add
+// Catch user:add from loginWindow
 ipcMain.on('user:add', (e, data)=> {
   console.log(data.user, data.pass); // Test submitLogin function.
   loginWindow.close();
