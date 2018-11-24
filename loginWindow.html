@@ -14,14 +14,28 @@
             <fieldset class="">
                 <legend>Login</legend>
                 <label for="username">User</label>
-                <input type="text" name="username">
+                <input type="text" name="username" id="user">
                 <label for="password">Password</label>
                 <input type="text" name="password">
-                <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitData()">Submit</button>
+                <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitLogin()">Submit</button>
             </fieldset>
             </form>
             <div class="col s2"></div>
         </div>
     </div>
+    <script>
+        const electron = require('electron');
+        const {ipcRenderer} = electron;
+
+        const form = document.querySelector('form');
+        form.addEventListener('submit', submitLogin);
+
+        function submitLogin(e){
+            e.preventDefault();
+            const user = document.querySelector('#user').value;
+            console.log('User: ', user);
+            ipcRenderer.send('user:add', user);
+        }
+    </script>
 </body>
 </html>
