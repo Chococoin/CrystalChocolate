@@ -4,7 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const db = require('./config/mongodb_access').mongoURI; // DB Config
 
-process.env.NODE_ENV = 'production';
+process.env.NODE_ENV = 'development';
 
 const { app, BrowserWindow, Menu } = electron;
 
@@ -68,7 +68,7 @@ if(process.env.NODE_ENV !== 'production'){
     label: 'Developer Tools',
     submenu:[
       {
-        label: 'toggle DevTools',
+        label: 'Toggle DevTools',
         accelerator: process.platform == 'darwin' ? 'Command+I': 'Ctrl+I',
         click(item, focusedWindow){
           focusedWindow.toggleDevTools();
