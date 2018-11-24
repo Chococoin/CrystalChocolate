@@ -41,8 +41,8 @@ app.on('ready', ()=>{
 });
 
 // Catch user:add
-ipcMain.on('user:add', (e, user)=> {
-  console.log(user); // Test submitLogin function.
+ipcMain.on('user:add', (e, data)=> {
+  console.log(data.user, data.pass); // Test submitLogin function.
   loginWindow.close();
 });
 

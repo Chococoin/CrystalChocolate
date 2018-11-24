@@ -16,7 +16,7 @@
                 <label for="username">User</label>
                 <input type="text" name="username" id="user">
                 <label for="password">Password</label>
-                <input type="text" name="password">
+                <input type="text" name="password" id="pass">
                 <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitLogin()">Submit</button>
             </fieldset>
             </form>
@@ -33,8 +33,8 @@
         function submitLogin(e){
             e.preventDefault();
             const user = document.querySelector('#user').value;
-            console.log('User: ', user);
-            ipcRenderer.send('user:add', user);
+            const pass = document.querySelector('#pass').value;
+            ipcRenderer.send('user:add', {user, pass});
         }
     </script>
 </body>
