@@ -6,7 +6,7 @@ const db = require('./config/mongodb_access').mongoURI; // DB Config
 
 process.env.NODE_ENV = 'development';
 
-const { app, BrowserWindow, Menu } = electron;
+const { app, BrowserWindow, Menu, ipcMain } = electron;
 
 mongoose.connect(db, { useNewUrlParser: true })
   .then(()=> console.log('Mongo_DB connected'))
@@ -38,7 +38,13 @@ app.on('ready', ()=>{
     protocol: 'file',
     slashes: true
   }));
-})
+});
+
+// Catch user:add
+ipcMain.on('user:add', (e, user)=> {
+  console.log(user); // Test submitLogin function.
+  loginWindow.close();
+});
 
 app.setName('CrystalChocolate');
 
