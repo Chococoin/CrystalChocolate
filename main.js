@@ -2,6 +2,7 @@ const electron = require('electron');
 const url = require('url');
 const path = require('path');
 const mongoose = require('mongoose');
+const User = require('./models/Users')
 const db = require('./config/mongodb_access').mongoURI; // DB Config
 
 process.env.NODE_ENV = 'development';
@@ -62,6 +63,14 @@ app.on('ready', ()=>{
 // Catch user:add from registerWindow
 ipcMain.on('register:add', (e, data)=> {
   console.log(data); // Test submitSingUp function.
+  var newUser = new User({ user: data.user,
+                           first_name: data.firstName,
+                           last_name: data.lastName,
+                           country: data.country,
+                           email: data.email,
+                           password: data.pass
+                        });
+  newUser.save().then((res)=>{console.log('Res: ', res)});
   registerWindow.close();
 });
 
