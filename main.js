@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const User = require('./models/Users')
 const db = require('./config/mongodb_access').mongoURI; // DB Config
 const validateRegisterInput = require('./validation/register');
+const validateLoginInput = require('./validation/login');
 
 process.env.NODE_ENV = 'development';
 
@@ -45,12 +46,6 @@ app.on('ready', ()=>{
   }));
 });
 
-// Catch user:add from loginWindow
-ipcMain.on('user:add', (e, data)=> {
-  console.log(data.user, data.pass); // Test submitLogin function.
-  loginWindow.close();
-});
-
 // Open loginWindow from registerWindow
 ipcMain.on('signIn:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
@@ -62,6 +57,16 @@ ipcMain.on('signIn:open', (e)=> {
   registerWindow.close();
 });
 
+// Catch user:add from loginWindow
+ipcMain.on('user:add', (e, data)=> {
+  console.log('User input: ', data.user, 'Pass input: ', data.pass); // Test submitLogin function.
+  const { errors, isValid } = validateLoginInput(data);
+  if(!isValid){
+    console.log(errors);
+  } else { 
+    loginWindow.close();
+  }
+});
 
 // Create and Open registerWindow from loginWindow
 ipcMain.on('signUp:open', (e)=> {
@@ -81,16 +86,16 @@ ipcMain.on('register:add', (e, data)=> {
   // Check Validation
   if(!isValid){
     console.log(errors);
+  } else {
+    var newUser = new User({ user: data.user,
+                             first_name: data.firstName,
+                             last_name: data.lastName,
+                             country: data.country,
+                             email: data.email,
+                             password: data.pass
+                          });
+    newUser.save().then((res)=>{console.log('Res: ', res)});
   }
-
-  var newUser = new User({ user: data.user,
-                           first_name: data.firstName,
-                           last_name: data.lastName,
-                           country: data.country,
-                           email: data.email,
-                           password: data.pass
-                        });
-  //newUser.save().then((res)=>{console.log('Res: ', res)});
   registerWindow.close();
 });
 
