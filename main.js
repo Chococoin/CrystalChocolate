@@ -50,14 +50,15 @@ ipcMain.on('user:add', (e, data)=> {
   loginWindow.close();
 });
 
-// Create registerWindow
-app.on('ready', ()=>{
+// Create and Open registerWindow from loginWindow
+ipcMain.on('signUp:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
   registerWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'registerWindow.html'),
     protocol: 'file',
     slashes: true
   }));
+  loginWindow.close();
 });
 
 // Catch user:add from registerWindow

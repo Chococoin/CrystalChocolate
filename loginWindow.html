@@ -23,7 +23,7 @@
             <div class="col s2"></div>
         </div>
         <div class="row">
-            <p class="col s6 offset-s4">Not registred yet? <a href="">Sign Up</a></p>
+            <p class="col s6 offset-s4">Not registred yet? <a href="" id="link" onclick="openSignUp()">Sign Up</a></p>
         </div>
     </div>
     <script>
@@ -33,11 +33,19 @@
         const form = document.querySelector('form');
         form.addEventListener('submit', submitLogin);
 
+        const link = document.getElementById('link');
+        link.addEventListener('click', openSignUp);
+
         function submitLogin(e){
             e.preventDefault();
             const user = document.querySelector('#user').value;
             const pass = document.querySelector('#pass').value;
             ipcRenderer.send('user:add', {user, pass});
+        }
+
+        function openSignUp(e){
+            e.preventDefault();
+            ipcRenderer.send('signUp:open');
         }
     </script>
 </body>
