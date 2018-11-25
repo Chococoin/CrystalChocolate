@@ -27,7 +27,7 @@
                 <input type="text" name="password" id="pass">
                 <label for="password2">Repeat Password</label>
                 <input type="text" name="password2" id="pass2">
-                <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitSingUp()">Submit</button>
+                <button class="btn-small waves-effect waves-light col s3 offset-s9" type="submit" onclick="submitSignUp()">Submit</button>
             </fieldset>
             </form>
             <div class="col s2"></div>
@@ -42,7 +42,7 @@
         const {ipcRenderer} = electron;
 
         const form = document.querySelector('form');
-        form.addEventListener('submit', submitSingUp);
+        form.addEventListener('submit', submitSignUp);
 
         const link = document.getElementById('link');
         link.addEventListener('click', signIn);
@@ -52,7 +52,7 @@
             ipcRenderer.send('signIn:open');
         }
 
-        function submitSingUp(e){
+        function submitSignUp(e){
             e.preventDefault();
             const user = document.querySelector('#user').value;
             const firstName = document.querySelector('#firstName').value;
