@@ -50,6 +50,18 @@ ipcMain.on('user:add', (e, data)=> {
   loginWindow.close();
 });
 
+// Open loginWindow from registerWindow
+ipcMain.on('signIn:open', (e)=> {
+  loginWindow = new BrowserWindow({ width: 600, height: 500 });
+  loginWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'loginWindow.html'),
+    protocol: 'file',
+    slashes: true
+  }));
+  registerWindow.close();
+});
+
+
 // Create and Open registerWindow from loginWindow
 ipcMain.on('signUp:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });

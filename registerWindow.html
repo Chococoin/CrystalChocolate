@@ -33,7 +33,7 @@
             <div class="col s2"></div>
         </div>
         <div class="row">
-            <p class="col s6 offset-s4">Already registred? <a href="">Sign In</a></p>
+            <p class="col s6 offset-s4">Already registred? <a href="" id="link" onclick="signIn()">Sign In</a></p>
 
         </div>
     </div>
@@ -43,6 +43,14 @@
 
         const form = document.querySelector('form');
         form.addEventListener('submit', submitSingUp);
+
+        const link = document.getElementById('link');
+        link.addEventListener('click', signIn);
+
+        function signIn(e){
+            e.preventDefault();
+            ipcRenderer.send('signIn:open');
+        }
 
         function submitSingUp(e){
             e.preventDefault();
