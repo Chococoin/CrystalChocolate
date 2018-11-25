@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/Users')
 const db = require('./config/mongodb_access').mongoURI; // DB Config
+const validateRegisterInput = require('./validation/register');
 
 process.env.NODE_ENV = 'development';
 
@@ -75,7 +76,13 @@ ipcMain.on('signUp:open', (e)=> {
 
 // Catch user:add from registerWindow
 ipcMain.on('register:add', (e, data)=> {
-  console.log(data); // Test submitSingUp function.
+  const { errors, isValid } = validateRegisterInput(data);
+
+  // Check Validation
+  if(!isValid){
+    console.log(errors);
+  }
+
   var newUser = new User({ user: data.user,
                            first_name: data.firstName,
                            last_name: data.lastName,
@@ -83,7 +90,7 @@ ipcMain.on('register:add', (e, data)=> {
                            email: data.email,
                            password: data.pass
                         });
-  newUser.save().then((res)=>{console.log('Res: ', res)});
+  //newUser.save().then((res)=>{console.log('Res: ', res)});
   registerWindow.close();
 });
 
