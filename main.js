@@ -52,7 +52,7 @@ ipcMain.on('user:add', (e, data)=> {
 
 // Open loginWindow from registerWindow
 ipcMain.on('signIn:open', (e)=> {
-  loginWindow = new BrowserWindow({ width: 600, height: 500 });
+  loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'loginWindow.html'),
     protocol: 'file',
