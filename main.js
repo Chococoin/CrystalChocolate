@@ -17,7 +17,7 @@ let mainWindow;
 let loginWindow;
 let registerWindow;
 
-// Create mainrWindow
+// Create mainWindow
 app.on('ready', ()=>{
   mainWindow = new BrowserWindow({});
   mainWindow.loadURL(url.format({
