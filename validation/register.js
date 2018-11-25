@@ -3,9 +3,18 @@ const isEmpty = require('./is-empty.js');
 
 function validateRegisterInput(data){
   let errors = {};
+
+  data.firstName = isEmpty(data.firstName) ? '' : data.firstName;
+
   if(!Validator.isLength(data.firstName, {min: 2, max: 30})){
-    errors.firstName = 'Name must be between 2 and 30 characters';
+    if(isEmpty(data.firstName)) {
+        errors.firstName = 'Name field is required';
+    } else {
+        errors.firstName = 'Name must be between 2 and 30 characters';
+    }
   }
+
+
 
   return {
     errors,
