@@ -21,7 +21,7 @@ let registerWindow;
 
 // Create mainWindow
 app.on('ready', ()=>{
-  mainWindow = new BrowserWindow({});
+  mainWindow = new BrowserWindow({ width: 850, height: 650 });
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'mainWindow.html'),
     protocol: 'file:',
@@ -82,20 +82,30 @@ ipcMain.on('signUp:open', (e)=> {
 // Catch user:add from registerWindow
 ipcMain.on('register:add', (e, data)=> {
   const { errors, isValid } = validateRegisterInput(data);
-
   // Check Validation
+  console.log(isValid);
   if(!isValid){
     console.log(errors);
-  } else {
-    var newUser = new User({ user: data.user,
-                             first_name: data.firstName,
-                             last_name: data.lastName,
-                             country: data.country,
-                             email: data.email,
-                             password: data.pass
-                          });
-    newUser.save().then((res)=>{console.log('Res: ', res)});
   }
+  if(isValid){
+    User.findOne({email: data.email})
+    .then(res=>{
+      if (data.email == res.email){
+        console.log('email already exists.');
+      } else {
+        var newUser = new User({ user: data.user,
+                                 first_name: data.firstName,
+                                 last_name: data.lastName,
+                                 country: data.country,
+                                 email: data.email,
+                                 password: data.pass
+                              });
+        newUser.save().then((res)=>{console.log('Res: ', res)});
+      }
+    })
+    .catch(err=> console.log(err));
+  } 
+
   registerWindow.close();
 });
 
