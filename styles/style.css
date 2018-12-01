@@ -16,7 +16,7 @@ body{
   z-index:    10;
 }
 
-.collapsible{
+#collaps{
   border-top: 0px solid #ddd;
   border-right: 0px solid #ddd;
   border-left: 0px solid #ddd;
