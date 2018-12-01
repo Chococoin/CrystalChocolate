@@ -1,10 +1,12 @@
 const electron = require('electron');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const url = require('url');
 const path = require('path');
 const mongoose = require('mongoose');
 const User = require('./models/Users')
 const db = require('./config/mongodb_access').mongoURI; // DB Config
+const key = require('./config/mongodb_access').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
 
@@ -60,7 +62,26 @@ ipcMain.on('signIn:open', (e)=> {
 
 // Catch user:add from loginWindow
 ipcMain.on('user:add', (e, data)=> {
-  console.log('User input: ', data.user, 'Pass input: ', data.pass); // Test submitLogin function.
+  User.findOne({user: data.user})
+    .then(res => {
+      bcrypt.compare(data.pass, res.password)
+        .then((isMatch)=>{
+          if(isMatch){
+            const payload = { id: data._id, name: data.user, date: data.date };
+            jwt.sign(
+              payload,
+              key,
+              { expiresIn: 3600 },
+              (err, token) => {
+                console.log('Success: You have got access');
+                console.log('token: ', 'Bearer ' + token)
+              });
+          } else {
+            console.log('Fail: Wrong Password');
+          }
+      });
+    })
+    .catch(err => { if(err) throw err });
   const { errors, isValid } = validateLoginInput(data);
   if(!isValid){
     console.log(errors);
@@ -105,13 +126,14 @@ ipcMain.on('register:add', (e, data)=> {
             if(err) throw err;
             data.pass = hash;
             console.log('Salted pass', data.pass);
-            var newUser = new User({ user: data.user,
-                         first_name: data.firstName,
-                         last_name: data.lastName,
-                         country: data.country,
-                         email: data.email,
-                         password: data.pass
-                        });
+            var newUser = new User({ 
+              user: data.user,
+              first_name: data.firstName,
+              last_name: data.lastName,
+              country: data.country,
+              email: data.email,
+              password: data.pass
+            });
             newUser.save().then((res)=>{console.log('Resp: ', res)});
           })
         });
