@@ -16,7 +16,7 @@
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.3",
     "crypto": "^1.0.1",
-    "electron": "^3.0.9",
+    "electron": "^3.0.10",
     "got": "^9.3.2",
     "jsonwebtoken": "^8.4.0",
     "mongoose": "^5.3.13",

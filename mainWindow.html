@@ -2,216 +2,10 @@
 <html lang="en">
 <head>
   <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="styles/style.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.2/jquery.min.js"></script>
-      <script>
-    function variables(){
-      inicio = $('#inicio').css('height');
-      que = $('#que').css('height');
-      historia = $('#historia').css('height');
-      fabrica = $('#fabrica').css('height');
-      banco = $('#banco').css('height');
-      soporte = $('#soporte').css('height');
-      timeUp = 850;
-      timeDown = 300;
-    }
-
-    var retardo = function(){
-      location.reload(false);
-    };
-
-    $(document).ready(function(){
-      variables()
-        $("#inicio").click(function(){
-          if(inicio === "54px" && que === "54px"){
-            $('#que>p').hide();
-            $('#que').animate({ height: '10'}, timeUp, 'swing');
-            $('#historia>p').hide();
-            $('#historia').animate({ height: '10px'}, timeUp, 'swing');
-            $('#fabrica>p').hide();
-            $('#fabrica').animate({ height: '10px'}, timeUp, 'swing');
-            $('#banco>p').hide();
-            $('#banco').animate({ height: '10px'}, timeUp, 'swing');
-            $('#soporte>p').hide();
-            $('#soporte').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          };
-
-          if(inicio === "54px" && que === "10px"){
-            $('#que').animate({ height: '54px'}, timeDown, 'swing');
-            $('#que>p').show();
-            $('#historia').animate({ height: '54px'}, timeDown, 'swing');
-            $('#historia>p').show();
-            $('#fabrica').animate({ height: '54px'}, timeDown, 'swing');
-            $('#fabrica>p').show();
-            $('#banco').animate({ height: '54px'}, timeDown, 'swing');
-            $('#banco>p').show();
-            $('#soporte').animate({ height: '54px'}, timeDown, 'swing');
-            $('#soporte>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-
-        $("#que").click(function(){
-          if(que === "54px" && historia === "54px"){
-            $('#inicio>p').hide();
-            $('#inicio').animate({ height: '10'}, timeUp, 'swing');
-            $('#historia>p').hide();
-            $('#historia').animate({ height: '10px'}, timeUp, 'swing');
-            $('#fabrica>p').hide();
-            $('#fabrica').animate({ height: '10px'}, timeUp, 'swing');
-            $('#banco>p').hide();
-            $('#banco').animate({ height: '10px'}, timeUp, 'swing');
-            $('#soporte>p').hide();
-            $('#soporte').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          }
-
-          if(que === "54px" && historia === "10px"){
-            $('#inicio').animate({ height: '54px'}, timeDown, 'swing');
-            $('#inicio>p').show();
-            $('#historia').animate({ height: '54px'}, timeDown, 'swing');
-            $('#historia>p').show();
-            $('#fabrica').animate({ height: '54px'}, timeDown, 'swing');
-            $('#fabrica>p').show();
-            $('#banco').animate({ height: '54px'}, timeDown, 'swing');
-            $('#banco>p').show();
-            $('#soporte').animate({ height: '54px'}, timeDown, 'swing');
-            $('#soporte>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-
-        $("#historia").click(function(){
-          if(historia === "54px" && fabrica === "54px"){
-            $('#inicio>p').hide();
-            $('#inicio').animate({ height: '10'}, timeUp, 'swing');
-            $('#que>p').hide();
-            $('#que').animate({ height: '10px'}, timeUp, 'swing');
-            $('#fabrica>p').hide();
-            $('#fabrica').animate({ height: '10px'}, timeUp, 'swing');
-            $('#banco>p').hide();
-            $('#banco').animate({ height: '10px'}, timeUp, 'swing');
-            $('#soporte>p').hide();
-            $('#soporte').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          }
-
-          if(historia === "54px" && fabrica === "10px"){
-            $('#inicio').animate({ height: '54px'}, timeDown, 'swing');
-            $('#inicio>p').show();
-            $('#que').animate({ height: '54px'}, timeDown, 'swing');
-            $('#que>p').show();
-            $('#fabrica').animate({ height: '54px'}, timeDown, 'swing');
-            $('#fabrica>p').show();
-            $('#banco').animate({ height: '54px'}, timeDown, 'swing');
-            $('#banco>p').show();
-            $('#soporte').animate({ height: '54px'}, timeDown, 'swing');
-            $('#soporte>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-
-        $("#fabrica").click(function(){
-          if(fabrica === "54px" && banco === "54px"){
-            $('#inicio>p').hide();
-            $('#inicio').animate({ height: '10'}, timeUp, 'swing');
-            $('#que>p').hide();
-            $('#que').animate({ height: '10px'}, timeUp, 'swing');
-            $('#historia>p').hide();
-            $('#historia').animate({ height: '10px'}, timeUp, 'swing');
-            $('#banco>p').hide();
-            $('#banco').animate({ height: '10px'}, timeUp, 'swing');
-            $('#soporte>p').hide();
-            $('#soporte').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          }
-
-          if(fabrica === "54px" && banco === "10px"){
-            $('#inicio').animate({ height: '54px'}, timeDown, 'swing');
-            $('#inicio>p').show();
-            $('#que').animate({ height: '54px'}, timeDown, 'swing');
-            $('#que>p').show();
-            $('#historia').animate({ height: '54px'}, timeDown, 'swing');
-            $('#historia>p').show();
-            $('#banco').animate({ height: '54px'}, timeDown, 'swing');
-            $('#banco>p').show();
-            $('#soporte').animate({ height: '54px'}, timeDown, 'swing');
-            $('#soporte>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-
-        $("#banco").click(function(){
-          if(banco === "54px" && soporte === "54px"){
-            $('#inicio>p').hide();
-            $('#inicio').animate({ height: '10'}, timeUp, 'swing');
-            $('#que>p').hide();
-            $('#que').animate({ height: '10px'}, timeUp, 'swing');
-            $('#historia>p').hide();
-            $('#historia').animate({ height: '10px'}, timeUp, 'swing');
-            $('#fabrica>p').hide();
-            $('#fabrica').animate({ height: '10px'}, timeUp, 'swing');
-            $('#soporte>p').hide();
-            $('#soporte').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          }
-
-          if(banco === "54px" && soporte === "10px"){
-            $('#inicio').animate({ height: '54px'}, timeDown, 'swing');
-            $('#inicio>p').show();
-            $('#que').animate({ height: '54px'}, timeDown, 'swing');
-            $('#que>p').show();
-            $('#historia').animate({ height: '54px'}, timeDown, 'swing');
-            $('#historia>p').show();
-            $('#fabrica').animate({ height: '54px'}, timeDown, 'swing');
-            $('#fabrica>p').show();
-            $('#soporte').animate({ height: '54px'}, timeDown, 'swing');
-            $('#soporte>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-
-        $("#soporte").click(function(){
-          if(soporte === "54px" && banco === "54px"){
-            $('#inicio>p').hide();
-            $('#inicio').animate({ height: '10'}, timeUp, 'swing');
-            $('#que>p').hide();
-            $('#que').animate({ height: '10px'}, timeUp, 'swing');
-            $('#historia>p').hide();
-            $('#historia').animate({ height: '10px'}, timeUp, 'swing');
-            $('#fabrica>p').hide();
-            $('#fabrica').animate({ height: '10px'}, timeUp, 'swing');
-            $('#banco>p').hide();
-            $('#banco').animate({ height: '10px'}, timeUp, 'swing');
-            variables()
-          }
-
-          if(soporte === "54px" && banco === "10px"){
-            $('#inicio').animate({ height: '54px'}, timeDown, 'swing');
-            $('#inicio>p').show();
-            $('#que').animate({ height: '54px'}, timeDown, 'swing');
-            $('#que>p').show();
-            $('#historia').animate({ height: '54px'}, timeDown, 'swing');
-            $('#historia>p').show();
-            $('#fabrica').animate({ height: '54px'}, timeDown, 'swing');
-            $('#fabrica>p').show();
-            $('#banco').animate({ height: '54px'}, timeDown, 'swing');
-            $('#banco>p').show();
-            variables()
-            setTimeout(retardo, timeDown*4);
-          }
-        });
-    });
-  </script>
-	<title>CrystalChocolate</title>
+  <title>CrystalChocolate</title>
 </head>
 <body>
   <nav>
@@ -219,19 +13,37 @@
       <a class="logo"><img src="https://image.ibb.co/fm3oPf/logo.png" alt="logo" border="0"  style="height:75%; margin-top:10px; margin-left:5px"></a>
     </div>
   </nav>
-<!--   <h3 class="center">CrystalChocolate</h3> -->
-  <div class="container">
-    <div id="logo"></div>   
-    <div id="inicio"><p>inicio</p></div>
-    <div id="que"><p>¿Qué es la chocosfera?</p></div>
-    <div id="historia"><p>Historia</p></div>
-    <div id="fabrica"><p>Choco Fábrica</p></div>
-    <div id="banco"><p>Banco</p></div>
-    <div id="soporte"><p>Soporte</p></div>
-<!-- 	  <p class="col s8 center">A UI for trasparency in the management of the project Bit&Nibs</p> -->
-    <h3 class="col s4 center"> EUR </h3>
-    <p id="tag" class="col s4 center"><span>€ </span></p>
-  </div>
+
+  <div id="logo"></div>   
+  <ul class="collapsible" id="collaps">
+    <li>
+      <div class="collapsible-header" id="inicio">inicio</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header" id="que">¿Qué es la chocosfera?</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header" id="historia">historia</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header" id="fabrica">Choco Fábrica</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header" id="banco">Banco</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+    <li>
+      <div class="collapsible-header" id="soporte">Soporte</div>
+      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+    </li>
+  </ul>
+  <h3 class="col s4 center"> EUR </h3>
+  <p id="tag" class="col s4 center"><span>€ </span></p>
+
         <script>
           const key = require('./keys/key');
           const secret = require('./keys/secret');
@@ -245,6 +57,11 @@
               const itemMessage = document.createTextNode(message);
               tag.appendChild(itemMessage)})
             .catch(err => console.log(err));
+
+          document.addEventListener('DOMContentLoaded', function() {
+            var elems = document.querySelectorAll('.collapsible');
+            var instances = M.Collapsible.init(elems, options);
+          });
         </script>
 </body>
 </html>
