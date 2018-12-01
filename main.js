@@ -1,4 +1,5 @@
 const electron = require('electron');
+const bcrypt = require('bcryptjs');
 const url = require('url');
 const path = require('path');
 const mongoose = require('mongoose');
@@ -104,6 +105,15 @@ ipcMain.on('register:add', (e, data)=> {
                                  email: data.email,
                                  password: data.pass
                               });
+        // Add Salt 
+        // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT. 
+        bcrypt.genSalt(1, (err, salt) => {
+          bcrypt.hash(newUser.password, salt, (err, hash) => {
+            if(err) throw err;
+            newUser.password = hash;
+          })
+        });
+
         newUser.save().then((res)=>{console.log('Res: ', res)});
       }
     })
