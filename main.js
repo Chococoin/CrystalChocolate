@@ -83,16 +83,20 @@ ipcMain.on('signUp:open', (e)=> {
 ipcMain.on('register:add', (e, data)=> {
   const { errors, isValid } = validateRegisterInput(data);
   // Check Validation
-  console.log(isValid);
   if(!isValid){
     console.log(errors);
   }
   if(isValid){
     User.findOne({email: data.email})
     .then(res=>{
-      if (data.email == res.email){
-        console.log('email already exists.');
-      } else {
+      if(res !== null){
+        if (data.email == res.email){
+          console.log('email already exists.');
+        } else {
+          console.log('This should not have happened!')
+        }
+      }
+      if(res === null){
         var newUser = new User({ user: data.user,
                                  first_name: data.firstName,
                                  last_name: data.lastName,
