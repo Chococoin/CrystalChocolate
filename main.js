@@ -98,23 +98,23 @@ ipcMain.on('register:add', (e, data)=> {
         }
       }
       if(res === null){
-        var newUser = new User({ user: data.user,
-                                 first_name: data.firstName,
-                                 last_name: data.lastName,
-                                 country: data.country,
-                                 email: data.email,
-                                 password: data.pass
-                              });
         // Add Salt 
         // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT. 
         bcrypt.genSalt(1, (err, salt) => {
-          bcrypt.hash(newUser.password, salt, (err, hash) => {
+          bcrypt.hash(data.pass, salt, (err, hash) => {
             if(err) throw err;
-            newUser.password = hash;
+            data.pass = hash;
+            console.log('Salted pass', data.pass);
+            var newUser = new User({ user: data.user,
+                         first_name: data.firstName,
+                         last_name: data.lastName,
+                         country: data.country,
+                         email: data.email,
+                         password: data.pass
+                        });
+            newUser.save().then((res)=>{console.log('Resp: ', res)});
           })
         });
-
-        newUser.save().then((res)=>{console.log('Res: ', res)});
       }
     })
     .catch(err=> console.log(err));
