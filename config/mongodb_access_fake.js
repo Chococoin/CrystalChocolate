@@ -9,5 +9,6 @@
  */
 
 module.exports = {
-  mongoURI: 'mongodb://nameOfuser:VerySecurePassword@ds375321.mlab.com:55823/nameOfourDatabase'
+  mongoURI: 'mongodb://nameOfuser:VerySecurePassword@ds375321.mlab.com:55823/nameOfourDatabase',
+  secretOrKey: 'secret_key'
 }
