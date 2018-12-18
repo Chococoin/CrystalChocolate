@@ -24,7 +24,7 @@ let registerWindow;
 
 // Create mainWindow
 app.on('ready', ()=>{
-  mainWindow = new BrowserWindow({ width: 850, height: 650 });
+  mainWindow = new BrowserWindow({ width: 1200, height: 850 });
   mainWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'mainWindow.html'),
     protocol: 'file:',
