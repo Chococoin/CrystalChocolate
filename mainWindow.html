@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+  <meta name = "viewport" content = "width = device-width, initial-scale = 1">
   <link rel="stylesheet" href="styles/reset.css">
-  <link type="text/css" rel="stylesheet" href="css/materialize.min.css"  media="screen,projection"/>
-  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <link rel="stylesheet" href="styles/style.css">
+  <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
+  <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
+  <link rel = "stylesheet" href = "./css/materialize.css">
+  <script src = "./js/materialize.js"></script>
   <title>CrystalChocolate</title>
 </head>
 <body>
@@ -44,24 +47,24 @@
   <h3 class="col s4 center"> EUR </h3>
   <p id="tag" class="col s4 center"><span>€ </span></p>
 
-        <script>
-          const key = require('./keys/key');
-          const secret = require('./keys/secret');
-          const KrakenClient = require('./kraken');
-          const kraken = new KrakenClient(key, secret);
-          var message = "null";
-          kraken.api('Balance')
-            .then(res => {
-              message = res.result.ZEUR;
-              var tag = document.getElementById('tag');
-              const itemMessage = document.createTextNode(message);
-              tag.appendChild(itemMessage)})
-            .catch(err => console.log(err));
-
-          document.addEventListener('DOMContentLoaded', function() {
-            var elems = document.querySelectorAll('.collapsible');
-            var instances = M.Collapsible.init(elems, options);
-          });
-        </script>
+  <script>
+    const key = require('./keys/key');
+    const secret = require('./keys/secret');
+    const KrakenClient = require('./kraken');
+    const kraken = new KrakenClient(key, secret);
+    var message = "null";
+    kraken.api('Balance')
+      .then(res => {
+        message = res.result.ZEUR;
+        var tag = document.getElementById('tag');
+        const itemMessage = document.createTextNode(message);
+        tag.appendChild(itemMessage)})
+      .catch(err => console.log(err));
+    var elem = document.querySelector('.collapsible');
+    var instance = new M.Collapsible(elem, {
+      inDuration: 800,
+      outDuration: 800
+    });
+  </script>
 </body>
 </html>
