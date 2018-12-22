@@ -1,5 +1,5 @@
 const electron = require('electron');
 const { app, BrowserWindow, Menu, ipcMain } = electron;
-const main = require('../main');
+const main = require('../testImport');
 
 console.log(main);
