@@ -222,7 +222,7 @@ ipcMain.on('signIn:open', (e)=>{openLoginFromRegister()});
 
 ipcMain.on('user:add', (e, data)=> {loginChecker(data)});
 
-// Open loginWindow from registerWindow
+// Open registerWindowl from oginWindow
 ipcMain.on('signUp:open', (e)=>{openRegisterfromLogin()});
 
 // Catch user:add from registerWindow
