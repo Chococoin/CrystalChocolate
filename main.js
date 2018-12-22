@@ -227,3 +227,5 @@ ipcMain.on('signUp:open', (e)=>{openRegisterfromLogin()});
 
 // Catch user:add from registerWindow
 ipcMain.on('register:add', (e, data)=>{registerChecker(data)});
+
+module.exports = MainWindow;
