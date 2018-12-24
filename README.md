@@ -19,7 +19,7 @@ CrystalChocolate run with electron 3.0.9. If you have already install electron w
 
 ### Development
 
-Want to contibute? Great?
+Want to contibute? Great!
 
 First of all, CrystalChocolate is a project to have fun, but we take people's work very seriously. We are working to place the backlog of the project here. For each task performed, we will offer good bounties 💰 from the funds shown in the API, or in the absence of funds, we will pay with project's tokens which will be repurchased with € or $ as soon as we have availability. Currently the project has a monthly entrance of about $ 500. 👨‍💻
 
