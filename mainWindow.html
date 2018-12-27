@@ -14,6 +14,10 @@
   <nav>
     <div class="nav-wrapper brown darken-3">
       <a class="logo"><img src="https://image.ibb.co/fm3oPf/logo.png" alt="logo" border="0"  style="height:75%; margin-top:10px; margin-left:5px"></a>
+      <ul id="nav-mobile" class="right hide-on-med-and-down">
+        <li><a href="" id="log" onclick="signIn()">Login</a></li>
+        <li><a href="" id="reg" onclick="signUp()">SignUp</a></li>
+      </ul>
     </div>
   </nav>
 
@@ -53,6 +57,9 @@
     const secret = require('./keys/secret');
     const KrakenClient = require('./kraken');
     const kraken = new KrakenClient(key, secret);
+    const electron = require('electron');
+    const {ipcRenderer} = electron;
+
     function krakenApiCall(){
       var message = "null";
       kraken.api('Balance')
@@ -63,12 +70,31 @@
           tag.appendChild(itemMessage)})
         .catch(err => console.log(err));
     }
+
     krakenApiCall();
+
     var elem = document.querySelector('.collapsible');
     var instance = new M.Collapsible(elem, {
       inDuration: 800,
       outDuration: 800
     });
+
+    const log = document.getElementById('log');
+    log.addEventListener('click', signIn);
+
+    const register = document.getElementById('reg');
+    register.addEventListener('click', signUp);
+
+    function signIn(e){
+      e.preventDefault();
+      ipcRenderer.send('signInMain:open');
+    }
+
+    function signUp(e){
+      e.preventDefault();
+      ipcRenderer.send('signUpMain:open');
+    }
+
   </script>
 </body>
 </html>

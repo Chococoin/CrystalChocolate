@@ -39,8 +39,8 @@ app.on('ready', ()=>{
   Menu.setApplicationMenu(mainMenu);
 });
 
-// Create loginWindow
-app.on('ready', ()=>{
+// Open loginWindow from mainWindow
+ipcMain.on('signInMain:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
     pathname: path.join(__dirname, 'loginWindow.html'),
@@ -88,6 +88,16 @@ ipcMain.on('user:add', (e, data)=> {
   } else { 
     loginWindow.close();
   }
+});
+
+// Create and Open registerWindow from loginWindow
+ipcMain.on('signUpMain:open', (e)=> {
+  registerWindow = new BrowserWindow({ width: 600, height: 500 });
+  registerWindow.loadURL(url.format({
+    pathname: path.join(__dirname, 'registerWindow.html'),
+    protocol: 'file',
+    slashes: true
+  }));
 });
 
 // Create and Open registerWindow from loginWindow
