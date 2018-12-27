@@ -3,10 +3,10 @@
 <head>
   <meta name = "viewport" content = "width = device-width, initial-scale = 1">
   <link rel="stylesheet" href="styles/reset.css">
-  <link rel="stylesheet" href="styles/style.css">
   <link rel = "stylesheet" href = "https://fonts.googleapis.com/icon?family=Material+Icons">
   <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet' type='text/css'>
   <link rel = "stylesheet" href = "./css/materialize.css">
+  <link rel="stylesheet" href="styles/style.css">
   <script src = "./js/materialize.js"></script>
   <title>CrystalChocolate</title>
 </head>
@@ -37,29 +37,31 @@
     </li>
     <li>
       <div class="collapsible-header valign-wrapper" id="banco">Banco</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+      <div class="collapsible-body" id="banco-body">  <h3 class="col s4 center"> EUR </h3>
+      <p id="tag" class="col s4 center"><span>€ </span></p></div>
     </li>
     <li>
       <div class="collapsible-header valign-wrapper" id="soporte">Soporte</div>
       <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
     </li>
   </ul>
-  <h3 class="col s4 center"> EUR </h3>
-  <p id="tag" class="col s4 center"><span>€ </span></p>
 
   <script>
     const key = require('./keys/key');
     const secret = require('./keys/secret');
     const KrakenClient = require('./kraken');
     const kraken = new KrakenClient(key, secret);
-    var message = "null";
-    kraken.api('Balance')
-      .then(res => {
-        message = res.result.ZEUR;
-        var tag = document.getElementById('tag');
-        const itemMessage = document.createTextNode(message);
-        tag.appendChild(itemMessage)})
-      .catch(err => console.log(err));
+    function krakenApiCall(){
+      var message = "null";
+      kraken.api('Balance')
+        .then(res => {
+          message = res.result.ZEUR;
+          var tag = document.getElementById('tag');
+          const itemMessage = document.createTextNode(message);
+          tag.appendChild(itemMessage)})
+        .catch(err => console.log(err));
+    }
+    krakenApiCall();
     var elem = document.querySelector('.collapsible');
     var instance = new M.Collapsible(elem, {
       inDuration: 800,

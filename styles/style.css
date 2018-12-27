@@ -6,6 +6,11 @@ body{
 
 }
 
+.collapsible-body h3 {
+  padding: 0;
+  margin: 0;
+}
+
 .container{ 
   background-color: rgba(38,11,18,0.5); 
   height:     100%; 
@@ -117,6 +122,10 @@ body{
   text-align: center;
   text-transform: uppercase;
   user-select: none;
+}
+
+#banco-body {
+  padding: 0.8rem;
 }
 
 #soporte{
