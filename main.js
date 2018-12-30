@@ -157,7 +157,7 @@ ipcMain.on('register:add', (e, data)=> {
 });
 
 // github OAuthentication
-ipcMain.on('OAuthGithub:add', (e) => {
+ipcMain.on('OAuthGithub:open', (e) => {
   oauthWindow = new BrowserWindow({ width: 450, height: 620, show: false, 'node-integration': false });
   const githubUrl = 'https://github.com/login/oauth/authorize?';
   var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' + githubKey.scopes;
