@@ -4,7 +4,6 @@ const jwt = require('jsonwebtoken');
 const url = require('url');
 const path = require('path');
 const mongoose = require('mongoose');
-const electronEjs = require('electron-ejs');
 const User = require('./models/Users');
 const db = require('./config/mongodb_access').mongoURI; // DB Config
 const key = require('./config/mongodb_access').secretOrKey;
@@ -14,8 +13,6 @@ const validateLoginInput = require('./validation/login');
 process.env.NODE_ENV = 'development';
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
-
-var ejs = new electronEjs({ name : 'Hola German'}, {})
 
 mongoose.connect(db, { useNewUrlParser: true })
   .then(()=> console.log('Mongo_DB connected'))
