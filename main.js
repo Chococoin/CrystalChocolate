@@ -9,6 +9,7 @@ const db = require('./config/mongodb_access').mongoURI; // DB Config
 const key = require('./config/mongodb_access').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
+const githubKey = require('./keys/strategy-keys');
 
 process.env.NODE_ENV = 'development';
 
@@ -153,6 +154,15 @@ ipcMain.on('register:add', (e, data)=> {
   } 
 
   registerWindow.close();
+});
+
+// github OAuthentication
+ipcMain.on('OAuthGithub:add', (e) => {
+  oauthWindow = new BrowserWindow({ width: 450, height: 620, show: false, 'node-integration': false });
+  const githubUrl = 'https://github.com/login/oauth/authorize?';
+  var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' + githubKey.scopes;
+  oauthWindow.loadURL(authUrl);
+  oauthWindow.show();
 });
 
 app.setName('CrystalChocolate');
