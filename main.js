@@ -6,8 +6,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const apiRequests = require('superagent');
 const User = require('./models/Users');
-const db = require('./config/mongodb_access').mongoURI; // DB Config
-const key = require('./config/mongodb_access').secretOrKey;
+const db = require('./config/mongodb_access_fake').mongoURI; // DB Config
+const key = require('./config/mongodb_access_fake').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
 const githubKey = require('./keys/strategy-keys');
@@ -87,7 +87,7 @@ ipcMain.on('user:add', (e, data)=> {
   const { errors, isValid } = validateLoginInput(data);
   if(!isValid){
     console.log(errors);
-  } else { 
+  } else {
     loginWindow.close();
   }
 });
@@ -131,14 +131,14 @@ ipcMain.on('register:add', (e, data)=> {
         }
       }
       if(res === null){
-        // Add Salt 
-        // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT. 
+        // Add Salt
+        // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT.
         bcrypt.genSalt(1, (err, salt) => {
           bcrypt.hash(data.pass, salt, (err, hash) => {
             if(err) throw err;
             data.pass = hash;
             console.log('Salted pass', data.pass);
-            var newUser = new User({ 
+            var newUser = new User({
               user: data.user,
               first_name: data.firstName,
               last_name: data.lastName,
@@ -152,7 +152,7 @@ ipcMain.on('register:add', (e, data)=> {
       }
     })
     .catch(err=> console.log(err));
-  } 
+  }
 
   registerWindow.close();
 });
@@ -161,7 +161,7 @@ ipcMain.on('register:add', (e, data)=> {
 ipcMain.on('OAuthGithub:open', (e) => {
   oauthWindow = new BrowserWindow({ width: 450, height: 620 });
   const githubUrl = 'https://github.com/login/oauth/authorize?';
-  var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' + 
+  var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' +
                 githubKey.scopes + '&status=mustBeRandom'; // TODO: Deploy a random status to avoid men in the middle attack
   oauthWindow.loadURL(authUrl);
   oauthWindow.show();
@@ -183,7 +183,7 @@ ipcMain.on('OAuthGithub:open', (e) => {
       // Close the browser if code found or error
       oauthWindow.destroy();
     }
-  
+
     // If there is a code, proceed to get token from github
     if (code) {
       //console.log('This is a code ',code);
@@ -203,15 +203,17 @@ ipcMain.on('OAuthGithub:open', (e) => {
           apiRequests.get('https://api.github.com/user', {
             access_token: response.body.access_token,
           }).end((err, res) =>{
-            User.findOne({email: res.body.access_token}).then(resp=>{
-              if(!resp){
+            User.findOne({email: res.body.email}).then(resp=>{
+		if(resp === null){
                 var newUser = new User({
-                  user: res.body.name,
+                  user: res.body.login,
                   email: res.body.email,
                   avatar: res.body.avatar
                 });
                 newUser.save();
-              }
+              } else {
+		console.log('Welcome: ', resp.user);
+	      }
             })
           })
         } else {
