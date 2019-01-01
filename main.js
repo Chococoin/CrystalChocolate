@@ -200,8 +200,20 @@ ipcMain.on('OAuthGithub:open', (e) => {
         if (response && response.ok) {
           // Success - Received Token.
           // Store it in localStorage maybe?
-          // window.localStorage.setItem('githubtoken', response.body.access_token);
-          console.log('this is a body ',response.body);
+          apiRequests.get('https://api.github.com/user', {
+            access_token: response.body.access_token,
+          }).end((err, res) =>{
+            User.findOne({email: res.body.access_token}).then(resp=>{
+              if(!resp){
+                var newUser = new User({
+                  user: res.body.name,
+                  email: res.body.email,
+                  avatar: res.body.avatar
+                });
+                newUser.save();
+              }
+            })
+          })
         } else {
           // Error - Show messages.
           console.log(err);
