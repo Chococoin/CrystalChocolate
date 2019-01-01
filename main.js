@@ -4,9 +4,10 @@ const jwt = require('jsonwebtoken');
 const url = require('url');
 const path = require('path');
 const mongoose = require('mongoose');
+const apiRequests = require('superagent');
 const User = require('./models/Users');
-const db = require('./config/mongodb_access').mongoURI; // DB Config
-const key = require('./config/mongodb_access').secretOrKey;
+const db = require('./config/mongodb_access_fake').mongoURI; // DB Config
+const key = require('./config/mongodb_access_fake').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
 const githubKey = require('./keys/strategy-keys');
@@ -75,7 +76,7 @@ ipcMain.on('user:add', (e, data)=> {
               { expiresIn: 3600 },
               (err, token) => {
                 console.log('Success: You have got access');
-                console.log('token: ', 'Bearer ' + token)
+                console.log('token: ', 'Bearer ' + token);
               });
           } else {
             console.log('Fail: Wrong Password');
@@ -86,7 +87,7 @@ ipcMain.on('user:add', (e, data)=> {
   const { errors, isValid } = validateLoginInput(data);
   if(!isValid){
     console.log(errors);
-  } else { 
+  } else {
     loginWindow.close();
   }
 });
@@ -126,18 +127,18 @@ ipcMain.on('register:add', (e, data)=> {
         if (data.email == res.email){
           console.log('email already exists.');
         } else {
-          console.log('This should not have happened!')
+          console.log('This should not have happened!');
         }
       }
       if(res === null){
-        // Add Salt 
-        // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT. 
+        // Add Salt
+        // ToDo: USE AN USER PIN VALUE AS ARG FOR GEN SALT.
         bcrypt.genSalt(1, (err, salt) => {
           bcrypt.hash(data.pass, salt, (err, hash) => {
             if(err) throw err;
             data.pass = hash;
             console.log('Salted pass', data.pass);
-            var newUser = new User({ 
+            var newUser = new User({
               user: data.user,
               first_name: data.firstName,
               last_name: data.lastName,
@@ -151,7 +152,7 @@ ipcMain.on('register:add', (e, data)=> {
       }
     })
     .catch(err=> console.log(err));
-  } 
+  }
 
   registerWindow.close();
 });
@@ -160,9 +161,85 @@ ipcMain.on('register:add', (e, data)=> {
 ipcMain.on('OAuthGithub:open', (e) => {
   oauthWindow = new BrowserWindow({ width: 450, height: 620 });
   const githubUrl = 'https://github.com/login/oauth/authorize?';
-  var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' + githubKey.scopes;
+  var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' +
+                githubKey.scopes + '&status=mustBeRandom'; // TODO: Deploy a random status to avoid men in the middle attack
   oauthWindow.loadURL(authUrl);
   oauthWindow.show();
+
+  function handleCallback (url) {
+    var raw_code = /code=([^&]*)/.exec(url) || null;
+    var raw_status_res = /status=([a-zA-Z]*)/.exec(url) || null;
+    var code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
+    var status_res = ( raw_status_res && raw_status_res.length > 1) ? raw_status_res[1] : null;
+    var error = /\?error=(.+)$/.exec(url);
+
+    // if (status_res !== 'mustBeRandom'){ --> TODO!
+    //   //oauthWindow.destroy();
+    //   console.log(status_res, 'mustBeRandom');
+    // }
+
+    if (code || error) {
+      // Close the browser if code found or error
+      oauthWindow.destroy();
+    }
+
+    // If there is a code, proceed to get token from github
+    if (code) {
+      apiRequests
+      .post('https://github.com/login/oauth/access_token', {
+        client_id: githubKey.clientId,
+        client_secret: githubKey.clientSecret,
+        code: code,
+        status: 'mustBeRandom'
+      })
+      .end(function (err, response) {
+        if (response && response.ok) {
+          // Success - Received Token.
+          // Store it in localStorage maybe?
+          apiRequests.get('https://api.github.com/user', {
+            access_token: response.body.access_token,
+          }).end((err, res) =>{
+            User.findOne({email: res.body.email}).then(resp=>{
+		if(resp === null){
+                var newUser = new User({
+                  user: res.body.login,
+                  email: res.body.email,
+                  avatar: res.body.avatar
+                });
+                newUser.save();
+              } else {
+		console.log('Welcome: ', resp.user);
+	      }
+            })
+          })
+        } else {
+          // Error - Show messages.
+          console.log(err);
+        }
+      });
+
+    } else if (error) {
+      alert('Oops! Something went wrong and we couldn\'t' +
+        'log you in using Github. Please try again.');
+    }
+  }
+
+  // Handle the response from GitHub - See Update from 4/12/2015
+
+  oauthWindow.webContents.on('will-navigate', (event, url) => {
+    console.log('1');
+    handleCallback(url);
+  });
+
+  oauthWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
+    console.log('2');
+    handleCallback(newUrl);
+  });
+
+  // Reset the authWindow on close
+  oauthWindow.on('close', () => {
+      oauthWindow = null;
+  }, false);
 });
 
 app.setName('CrystalChocolate');
