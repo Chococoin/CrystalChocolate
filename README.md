@@ -15,7 +15,7 @@ $ npm install
 $ npm start
 ```
 
-CrystalChocolate run with electron 3.0.9. If you have already install electron with another version it could be source of a problem to visualize the funds saved in Kraken.com
+CrystalChocolate runs with electron 2.0.14 to be friendly with the raspeberry PI. If you have already install electron with another version it could be source of a problem to visualize the funds saved in Kraken.com
 
 ### Development
 
