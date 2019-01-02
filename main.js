@@ -6,8 +6,8 @@ const path = require('path');
 const mongoose = require('mongoose');
 const apiRequests = require('superagent');
 const User = require('./models/Users');
-const db = require('./config/mongodb_access_fake').mongoURI; // DB Config
-const key = require('./config/mongodb_access_fake').secretOrKey;
+const db = require('./config/mongodb_access').mongoURI; // DB Config
+const key = require('./config/mongodb_access').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
 const githubKey = require('./keys/strategy-keys');
@@ -224,15 +224,12 @@ ipcMain.on('OAuthGithub:open', (e) => {
     }
   }
 
-  // Handle the response from GitHub - See Update from 4/12/2015
-
+  // Handle the response from GitHub
   oauthWindow.webContents.on('will-navigate', (event, url) => {
-    console.log('1');
     handleCallback(url);
   });
 
   oauthWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
-    console.log('2');
     handleCallback(newUrl);
   });
 
