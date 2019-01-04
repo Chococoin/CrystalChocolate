@@ -14,7 +14,7 @@ const githubKey = require('./keys/strategy-keys');
 
 process.env.NODE_ENV = 'development';
 
-const { app, BrowserWindow, Menu, ipcMain } = electron;
+const { app, BrowserWindow, Menu, ipcMain, session } = electron;
 
 mongoose.connect(db, { useNewUrlParser: true })
   .then(()=> console.log('Mongo_DB connected'))
@@ -32,6 +32,8 @@ app.on('ready', ()=>{
     protocol: 'file:',
     slashes: true
   }));
+
+  const ses = mainWindow.webContents.session;
 
   mainWindow.on('closed', function(){
     app.quit();
@@ -207,6 +209,10 @@ ipcMain.on('OAuthGithub:open', (e) => {
                   avatar: res.body.avatar
                 });
                 newUser.save();
+                const cookie = { url: 'http://www.github.com', name: 'dummy_name', value: 'dummy' }
+                ses.cookies.set(cookie, (error) => {
+                  if (error) console.error(error)
+                })
               } else {
                 console.log('Welcome: ', resp.user);
               }

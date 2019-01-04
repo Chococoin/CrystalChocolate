@@ -63,7 +63,7 @@
     const KrakenClient = require('./kraken');
     const kraken = new KrakenClient(key, secret);
     const electron = require('electron');
-    const {ipcRenderer} = electron;
+    const { ipcRenderer, session } = electron;
 
     function krakenApiCall(){
       var message = "null";
@@ -103,10 +103,17 @@
       ipcRenderer.send('signUpMain:open');
     }
 
-    function oauthGithub(e){
-      e.preventDefault();
-      ipcRenderer.send('OAuthGithub:open')
+    function oauthGithub(event){
+      event.preventDefault();
+      ipcRenderer.send('OAuthGithub:open');
     }
+
+    setInterval(()=>{
+      session.cookie.get({}, (err, res) =>{
+      if(err) console.log(err);
+      if(res) console.log(res);
+    })
+    }, 1000)
 
   </script>
 </body>
