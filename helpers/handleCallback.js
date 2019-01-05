@@ -1,4 +1,3 @@
-//const random_status = require('./random_status');
 const apiRequests = require('superagent');
 const githubKey = require('../keys/strategy-keys');
 const User = require('../models/Users');
