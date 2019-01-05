@@ -13,8 +13,6 @@
             <form class="col s8">
             <fieldset>
                 <legend>Sing Up</legend>
-                <label for="username">User</label>
-                <input type="text" name="username" id="user">
                 <label for="firstName">First name</label>
                 <input type="text" name="firstName" id="firstName">
                 <label for="lastName">Last Name</label>
@@ -54,15 +52,15 @@
 
         function submitSignUp(e){
             e.preventDefault();
-            const user = document.querySelector('#user').value;
+            /* User must be random while the user does regist a github account*/
+            //const user = document.querySelector('#user').value;
             const firstName = document.querySelector('#firstName').value;
             const lastName = document.querySelector('#lastName').value;
             const email = document.querySelector('#mail').value;
             const country = document.querySelector('#country').value;
             const pass = document.querySelector('#pass').value;
             const pass2 = document.querySelector('#pass2').value;
-            ipcRenderer.send('register:add', {user,
-                                              firstName,
+            ipcRenderer.send('register:add', {firstName,
                                               lastName,
                                               email,
                                               country,

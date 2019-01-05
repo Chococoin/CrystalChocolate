@@ -35,11 +35,11 @@ function handleCallback(url, req_status) {
           apiRequests.get('https://api.github.com/user', {
             access_token: response.body.access_token,
           }).end((err, res) => {
-            User.findOne({ email: res.body.email }).then( resp => {
+            User.findOne({ github_email: res.body.email }).then( resp => {
               if(resp === null){
                 var newUser = new User({
                   user: res.body.login,
-                  email: res.body.email,
+                  github_email: res.body.email,
                   avatar: res.body.avatar
                 });
                 newUser.save();
