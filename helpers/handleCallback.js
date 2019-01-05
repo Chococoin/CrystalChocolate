@@ -45,6 +45,7 @@ function handleCallback(url, req_status) {
                 newUser.save();
               } else {
                 console.log('Welcome: ', resp.user);
+                console.log('Your Token for github is: ', response.body.access_token);
               }
             })
           })
