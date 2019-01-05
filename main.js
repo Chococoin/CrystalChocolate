@@ -11,6 +11,7 @@ const key = require('./config/mongodb_access').secretOrKey;
 const validateRegisterInput = require('./validation/register');
 const validateLoginInput = require('./validation/login');
 const githubKey = require('./keys/strategy-keys');
+const random_status = require('./helpers/random_status');
 
 process.env.NODE_ENV = 'development';
 
@@ -161,22 +162,23 @@ ipcMain.on('register:add', (e, data)=> {
 ipcMain.on('OAuthGithub:open', (e) => {
   oauthWindow = new BrowserWindow({ width: 450, height: 620 });
   const githubUrl = 'https://github.com/login/oauth/authorize?';
+  var req_status = random_status();
   var authUrl = githubUrl + 'client_id=' + githubKey.clientId + '&scope=' +
-                githubKey.scopes + '&status=mustBeRandom'; // TODO: Deploy a random status to avoid men in the middle attack
+                githubKey.scopes + '&status=' + req_status; 
   oauthWindow.loadURL(authUrl);
   oauthWindow.show();
 
   function handleCallback (url) {
     var raw_code = /code=([^&]*)/.exec(url) || null;
-    var raw_status_res = /status=([a-zA-Z]*)/.exec(url) || null;
+    var raw_status_res = /status=([a-zA-Z0-9]*)/.exec(url) || null;
     var code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
     var status_res = ( raw_status_res && raw_status_res.length > 1) ? raw_status_res[1] : null;
     var error = /\?error=(.+)$/.exec(url);
 
-    // if (status_res !== 'mustBeRandom'){ --> TODO!
-    //   //oauthWindow.destroy();
-    //   console.log(status_res, 'mustBeRandom');
-    // }
+    // Avoid a men-in-the-middle attack
+    if (status_res != req_status && status_res != null){
+      oauthWindow.destroy();
+    }
 
     if (code || error) {
       // Close the browser if code found or error
@@ -227,12 +229,10 @@ ipcMain.on('OAuthGithub:open', (e) => {
   // Handle the response from GitHub - See Update from 4/12/2015
 
   oauthWindow.webContents.on('will-navigate', (event, url) => {
-    console.log('1');
     handleCallback(url);
   });
 
   oauthWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
-    console.log('2');
     handleCallback(newUrl);
   });
 
