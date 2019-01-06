@@ -3,6 +3,7 @@ const githubKey = require('../keys/strategy-keys');
 const User = require('../models/Users');
 
 function handleCallback(url, req_status) {
+    return new Promise(function(resolve, reject){
     var raw_code = /code=([^&]*)/.exec(url) || null;
     var raw_status_res = /status=([a-zA-Z0-9]*)/.exec(url) || null;
     var code = (raw_code && raw_code.length > 1) ? raw_code[1] : null;
@@ -45,20 +46,23 @@ function handleCallback(url, req_status) {
                 newUser.save();
               } else {
                 console.log('Welcome: ', resp.user);
-                console.log('Your Token for github is: ', response.body.access_token);
+                resolve(response.body.access_token);
               }
             })
           })
         } else {
-          // Error - Show messages.
-          console.log(err);
+          // Error - Show messages. TODO
+          var error = new Error (err);
+          reject(error);
         }
       });
 
     } else if (error) {
-      alert('Oops! Something went wrong and we couldn\'t' +
-        'log you in using Github. Please try again.');
+          // Error - Show messages. TODO
+          var errors = new Error (error);
+          reject(errors);
     }
+  })
   }
 
   module.exports = handleCallback;
