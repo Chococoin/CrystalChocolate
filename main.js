@@ -25,6 +25,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 let mainWindow;
 let loginWindow;
 let registerWindow;
+let aaa;
 
 // Create mainWindow
 app.on('ready', ()=>{
@@ -171,7 +172,9 @@ ipcMain.on('OAuthGithub:open', (e) => {
 
   // Handle the response from GitHub - See Update from 4/12/2015
   oauthWindow.webContents.on('will-navigate', (event, url) => {
-    handleCallback(url, req_status);
+    handleCallback(url, req_status).then((cookie)=>{
+      console.log('Your Token for github is: ', cookie);
+    });
   });
 
   oauthWindow.webContents.on('did-get-redirect-request', (event, oldUrl, newUrl) => {
