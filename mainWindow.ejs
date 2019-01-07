@@ -27,7 +27,7 @@
   <ul class="collapsible" id="collaps">
     <li>
       <div class="collapsible-header valign-wrapper" id="inicio">inicio</div>
-      <div class="collapsible-body">
+      <div class="collapsible-body" id="start">
         <a class="waves-effect waves-light btn-large social github" id="ghb" onclick="oauthGithub()">
         <i class="fa fa-github"></i> Sign in with github</a>
       </div>
@@ -61,6 +61,7 @@
     const key = require('./keys/key');
     const secret = require('./keys/secret');
     const KrakenClient = require('./kraken');
+    const thereIsaChocoCookie = require('./helpers/whereIsMyChocoCookie');
     const kraken = new KrakenClient(key, secret);
     const electron = require('electron');
     const {ipcRenderer} = electron;
@@ -84,6 +85,9 @@
       outDuration: 800
     });
 
+    let myChocoCookie = localStorage.getItem("choco-cookie");
+    console.log(myChocoCookie);
+
     const log = document.getElementById('log');
     log.addEventListener('click', signIn);
 
@@ -92,6 +96,8 @@
 
     const oauther = document.getElementById('ghb');
     oauther.addEventListener('click', oauthGithub);
+
+    thereIsaChocoCookie();
 
     function signIn(e){
       e.preventDefault();
