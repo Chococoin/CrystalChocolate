@@ -105,8 +105,12 @@
 
     function oauthGithub(e){
       e.preventDefault();
-      ipcRenderer.send('OAuthGithub:open')
+      ipcRenderer.send('OAuthGithub:open');
     }
+
+    ipcRenderer.on('cookie', (event, arg) => {
+      localStorage.setItem("choco-cookie", arg);
+    })
 
   </script>
 </body>

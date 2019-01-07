@@ -25,6 +25,7 @@ mongoose.connect(db, { useNewUrlParser: true })
 let mainWindow;
 let loginWindow;
 let registerWindow;
+let cookie = '';
 
 // Create mainWindow
 app.on('ready', ()=>{
@@ -171,8 +172,11 @@ ipcMain.on('OAuthGithub:open', (e) => {
 
   // Handle the response from GitHub - See Update from 4/12/2015
   oauthWindow.webContents.on('will-navigate', (event, url) => {
-    handleCallback(url, req_status).then((cookie)=>{
+    handleCallback(url, req_status).then((c) => {
+      cookie += c;
       console.log('Your Token for github is: ', cookie);
+    }).catch(err => {
+      console.log(err);
     });
   });
 
@@ -185,6 +189,15 @@ ipcMain.on('OAuthGithub:open', (e) => {
       oauthWindow = null;
   }, false);
 });
+
+  // Wait for the user's github login
+var cookieListener = setInterval(()=>{
+  if (cookie !== ''){
+    mainWindow.webContents.send('cookie', cookie);
+    clearInterval(cookieListener);
+    cookie = null;
+  }
+}, 3000);
 
 app.setName('CrystalChocolate');
 
