@@ -25,7 +25,6 @@ mongoose.connect(db, { useNewUrlParser: true })
 let mainWindow;
 let loginWindow;
 let registerWindow;
-let aaa;
 
 // Create mainWindow
 app.on('ready', ()=>{
