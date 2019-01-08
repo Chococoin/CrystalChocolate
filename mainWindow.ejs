@@ -60,7 +60,7 @@
   <script>
     const key = require('./keys/key');
     const secret = require('./keys/secret');
-    const KrakenClient = require('./kraken');
+    const KrakenClient = require('./helpers/kraken');
     const thereIsaChocoCookie = require('./helpers/whereIsMyChocoCookie');
     const kraken = new KrakenClient(key, secret);
     const electron = require('electron');
