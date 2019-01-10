@@ -34,7 +34,7 @@
     </li>
     <li>
       <div class="collapsible-header valign-wrapper" id="que">¿Qué es la chocosfera?</div>
-      <div class="collapsible-body"><span>Lorem ipsum dolor sit amet.</span></div>
+      <div class="collapsible-body"><div id="like_button_container"></div></div>
     </li>
     <li>
       <div class="collapsible-header valign-wrapper" id="historia">historia</div>
@@ -119,5 +119,12 @@
     })
 
   </script>
+  <!-- Load our React component. -->
+  <script>
+    const React = require('react');
+    const ReactDOM = require('react-dom');
+  </script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+  <script type="text/babel" src="like_button.js"></script>
 </body>
 </html>
