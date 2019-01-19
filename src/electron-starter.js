@@ -46,7 +46,7 @@ app.on('ready', ()=>{
 ipcMain.on('signInMain:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views/loginWindow.ejs'),
+    pathname: path.join(__dirname, '../views/loginWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
@@ -56,7 +56,7 @@ ipcMain.on('signInMain:open', (e)=> {
 ipcMain.on('signIn:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
   loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views/loginWindow.ejs'),
+    pathname: path.join(__dirname, '../views/loginWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
@@ -97,7 +97,7 @@ ipcMain.on('user:add', (e, data)=> {
 ipcMain.on('signUpMain:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
   registerWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views/registerWindow.ejs'),
+    pathname: path.join(__dirname, '../views/registerWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
@@ -107,7 +107,7 @@ ipcMain.on('signUpMain:open', (e)=> {
 ipcMain.on('signUp:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
   registerWindow.loadURL(url.format({
-    pathname: path.join(__dirname, 'views/registerWindow.ejs'),
+    pathname: path.join(__dirname, '../views/registerWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
