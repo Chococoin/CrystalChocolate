@@ -5,14 +5,33 @@ const electron = window.require('electron')
 const ipcRenderer  = electron.ipcRenderer
 
 class Navbar extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      isLoginClosed: true,
+      isRegisterClosed: true
+    }
+
+    this.signIn = this.signIn.bind(this)
+    this.signUp = this.signUp.bind(this)
+  }
+
   signIn(e){
     e.preventDefault();
-    ipcRenderer.send('signInMain:open')
+    if(this.state.isLoginClosed){
+      ipcRenderer.send('signInMain:open')
+      this.setState(prevState => prevState.isLoginClosed = !prevState.isLoginClosed)
+      console.log(this.state.isLoginClosed) // TODO: Wire with main to change state
+    }
   }
 
   signUp(e){
     e.preventDefault();
-    ipcRenderer.send('signUpMain:open')
+    if(this.state.isLoginClosed){
+      ipcRenderer.send('signUpMain:open')
+      this.setState(prevState => prevState.isRegisterClosed= !prevState.isRegisterClosed)
+      console.log(this.state.isRegisterClosed) // TODO: Wire with main to change state
+    }
   }
 
   render(){
