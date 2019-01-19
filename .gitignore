@@ -5,3 +5,4 @@
 /config/mongodb_access.js
 /config/passport.js
 /config/key.js
+/src/components/Login.js
