@@ -14,24 +14,44 @@ class Navbar extends React.Component{
 
     this.signIn = this.signIn.bind(this)
     this.signUp = this.signUp.bind(this)
+    this.closeListener = this.closeListener.bind(this)
   }
 
   signIn(e){
     e.preventDefault();
     if(this.state.isLoginClosed){
-      ipcRenderer.send('signInMain:open')
-      this.setState(prevState => prevState.isLoginClosed = !prevState.isLoginClosed)
-      console.log(this.state.isLoginClosed) // TODO: Wire with main to change state
+      ipcRenderer.send('signInMain:open', this.state.isLoginClosed)
+    } else {
+      ipcRenderer.send('signInMain:close', this.state.isLoginClosed)
     }
   }
 
   signUp(e){
     e.preventDefault();
-    if(this.state.isLoginClosed){
-      ipcRenderer.send('signUpMain:open')
-      this.setState(prevState => prevState.isRegisterClosed= !prevState.isRegisterClosed)
-      console.log(this.state.isRegisterClosed) // TODO: Wire with main to change state
+    if(this.state.isRegisterClosed){
+      ipcRenderer.send('signUpMain:open', this.state.isRegisterClosed)
+    } else {
+      ipcRenderer.send('signUpMain:close', this.state.isRegisterClosed)
     }
+  }
+
+  closeListener(data){
+    this.setState(prevState => {
+      if(data[0] === "isLoginClosed"){
+        return prevState.isLoginClosed = data[1]
+      }
+      if(data[0] === "isRegisterClosed"){
+        return prevState.isRegisterClosed = data[1]
+      }
+    })
+  }
+
+  componentDidMount(){
+    ipcRenderer.on('send-to-renderer', (event, data) => this.closeListener(data))
+  }
+
+  componentWillUnmount(){
+    ipcRenderer.removeListener('send-to-renderer', this.closeListener)
   }
 
   render(){
@@ -40,8 +60,8 @@ class Navbar extends React.Component{
           <div className="nav-wrapper brown darken-3">
             <a className="logo"><img src="https://image.ibb.co/fm3oPf/logo.png" alt="logo" border="0"  style={{height: "75%", marginTop: "10px", marginLeft: "5px"}}/></a>
             <ul id="nav-mobile" className="right hide-on-med-and-down">
-              <li><a href="" id="log" onClick={this.signIn}>Login</a></li>
-              <li><a href="" id="reg" onClick={this.signUp}>SignUp</a></li>
+              <li style={!this.state.isLoginClosed ? {fontWeight : "bold"} : null}><a href="" id="log" onClick={this.signIn}>Login</a></li>
+              <li style={!this.state.isRegisterClosed ? {fontWeight : "bold"} : null}><a href="" id="reg" onClick={this.signUp}>SignUp</a></li>
             </ul>
           </div>
         </nav>

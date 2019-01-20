@@ -45,22 +45,45 @@ app.on('ready', ()=>{
 // Open loginWindow from mainWindow
 ipcMain.on('signInMain:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
+  mainWindow.send('send-to-renderer', ["isLoginClosed", false]);
   loginWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../views/loginWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
+
+  // Send data to change status isLoginClosed in Navbar.js
+  loginWindow.on('close', (e) => {
+    mainWindow.send('send-to-renderer', ["isLoginClosed", true]);
+    loginWindow = null;
+  }, false);
 });
 
-// Open loginWindow from registerWindow
+
+// Open loginWindow from registerWindow -> TODO: Don't repeat yourself
 ipcMain.on('signIn:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
+  mainWindow.send('send-to-renderer', ["isLoginClosed", false]);
   loginWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../views/loginWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
   registerWindow.close();
+  registerWindow = null;
+
+  // Send data to change status isLoginClosed in Navbar.js
+  loginWindow.on('close', (e) => {
+    mainWindow.send('send-to-renderer', ["isLoginClosed", true]);
+    loginWindow = null;
+  }, false);
+});
+
+ipcMain.on('signInMain:close', (e) => {
+  if(loginWindow !== null){
+    loginWindow.close();
+    loginWindow = null;
+  }
 });
 
 // Catch user:add from loginWindow
@@ -90,28 +113,49 @@ ipcMain.on('user:add', (e, data)=> {
     console.log(errors);
   } else {
     loginWindow.close();
+    loginWindow = null;
   }
 });
 
-// Create and Open registerWindow from loginWindow
+// Create and Open registerWindow from mainWindow
 ipcMain.on('signUpMain:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
+  mainWindow.send('send-to-renderer', ["isRegisterClosed", false]);
   registerWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../views/registerWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
+
+  registerWindow.on('close', (e) => {
+    mainWindow.send('send-to-renderer', ["isRegisterClosed", true]);
+    registerWindow = null;
+  }, false);
 });
 
 // Create and Open registerWindow from loginWindow
 ipcMain.on('signUp:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
+  mainWindow.send('send-to-renderer', ["isRegisterClosed", false]);
   registerWindow.loadURL(url.format({
     pathname: path.join(__dirname, '../views/registerWindow.ejs'),
     protocol: 'file',
     slashes: true
   }));
   loginWindow.close();
+  loginWindow = null;
+
+  registerWindow.on('close', (e) => {
+    mainWindow.send('send-to-renderer', ["isRegisterClosed", true]);
+    registerWindow = null;
+  }, false);
+});
+
+ipcMain.on('signUpMain:close', (e) => {
+  if(registerWindow !== null){
+    registerWindow.close();
+    registerWindow = null;
+  }
 });
 
 // Catch user:add from registerWindow
@@ -156,6 +200,7 @@ ipcMain.on('register:add', (e, data)=> {
   }
 
   registerWindow.close();
+  registerWindow = null;
 });
 
 // github OAuthentication
