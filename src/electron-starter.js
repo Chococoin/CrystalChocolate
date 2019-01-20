@@ -43,24 +43,6 @@ app.on('ready', ()=>{
 });
 
 // Open loginWindow from mainWindow
-ipcMain.on('signInMain:open', (e)=> {
-  loginWindow = new BrowserWindow({ width: 600, height: 400 });
-  mainWindow.send('send-to-renderer', ["isLoginClosed", false]);
-  loginWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../views/loginWindow.ejs'),
-    protocol: 'file',
-    slashes: true
-  }));
-
-  // Send data to change status isLoginClosed in Navbar.js
-  loginWindow.on('close', (e) => {
-    mainWindow.send('send-to-renderer', ["isLoginClosed", true]);
-    loginWindow = null;
-  }, false);
-});
-
-
-// Open loginWindow from registerWindow -> TODO: Don't repeat yourself
 ipcMain.on('signIn:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });
   mainWindow.send('send-to-renderer', ["isLoginClosed", false]);
@@ -69,8 +51,11 @@ ipcMain.on('signIn:open', (e)=> {
     protocol: 'file',
     slashes: true
   }));
-  registerWindow.close();
-  registerWindow = null;
+  if (registerWindow != null){
+    registerWindow.close();
+    mainWindow.send('send-to-renderer', ["isRegisterClosed", true]);
+    registerWindow = null;
+  }
 
   // Send data to change status isLoginClosed in Navbar.js
   loginWindow.on('close', (e) => {
@@ -79,7 +64,7 @@ ipcMain.on('signIn:open', (e)=> {
   }, false);
 });
 
-ipcMain.on('signInMain:close', (e) => {
+ipcMain.on('signIn:close', (e) => {
   if(loginWindow !== null){
     loginWindow.close();
     loginWindow = null;
@@ -118,22 +103,6 @@ ipcMain.on('user:add', (e, data)=> {
 });
 
 // Create and Open registerWindow from mainWindow
-ipcMain.on('signUpMain:open', (e)=> {
-  registerWindow = new BrowserWindow({ width: 600, height: 500 });
-  mainWindow.send('send-to-renderer', ["isRegisterClosed", false]);
-  registerWindow.loadURL(url.format({
-    pathname: path.join(__dirname, '../views/registerWindow.ejs'),
-    protocol: 'file',
-    slashes: true
-  }));
-
-  registerWindow.on('close', (e) => {
-    mainWindow.send('send-to-renderer', ["isRegisterClosed", true]);
-    registerWindow = null;
-  }, false);
-});
-
-// Create and Open registerWindow from loginWindow
 ipcMain.on('signUp:open', (e)=> {
   registerWindow = new BrowserWindow({ width: 600, height: 500 });
   mainWindow.send('send-to-renderer', ["isRegisterClosed", false]);
@@ -142,8 +111,11 @@ ipcMain.on('signUp:open', (e)=> {
     protocol: 'file',
     slashes: true
   }));
-  loginWindow.close();
-  loginWindow = null;
+  if (loginWindow != null){
+    loginWindow.close();
+    mainWindow.send('send-to-renderer', ["isLoginClosed", true]);
+    loginWindow = null;
+  }
 
   registerWindow.on('close', (e) => {
     mainWindow.send('send-to-renderer', ["isRegisterClosed", true]);
@@ -151,7 +123,7 @@ ipcMain.on('signUp:open', (e)=> {
   }, false);
 });
 
-ipcMain.on('signUpMain:close', (e) => {
+ipcMain.on('signUp:close', (e) => {
   if(registerWindow !== null){
     registerWindow.close();
     registerWindow = null;

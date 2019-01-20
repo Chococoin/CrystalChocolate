@@ -20,18 +20,18 @@ class Navbar extends React.Component{
   signIn(e){
     e.preventDefault();
     if(this.state.isLoginClosed){
-      ipcRenderer.send('signInMain:open', this.state.isLoginClosed)
+      ipcRenderer.send('signIn:open', this.state.isLoginClosed)
     } else {
-      ipcRenderer.send('signInMain:close', this.state.isLoginClosed)
+      ipcRenderer.send('signIn:close', this.state.isLoginClosed)
     }
   }
 
   signUp(e){
     e.preventDefault();
     if(this.state.isRegisterClosed){
-      ipcRenderer.send('signUpMain:open', this.state.isRegisterClosed)
+      ipcRenderer.send('signUp:open', this.state.isRegisterClosed)
     } else {
-      ipcRenderer.send('signUpMain:close', this.state.isRegisterClosed)
+      ipcRenderer.send('signUp:close', this.state.isRegisterClosed)
     }
   }
 
