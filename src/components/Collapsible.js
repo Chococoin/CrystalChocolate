@@ -2,7 +2,17 @@ import React from 'react'
 import M from '../../js/materialize.js'
 import LikeButton from './like_button'
 
+const electron = window.require('electron')
+const ipcRenderer  = electron.ipcRenderer
+
 class Collapse extends React.Component{
+  constructor(){
+    super()
+    this.state = {
+      cookie : ''
+    }
+    this.oauthGithub = this.oauthGithub.bind(this)
+  }
 
   componentDidMount(){
     M.Collapsible.init(this.collapsible, {
@@ -11,13 +21,18 @@ class Collapse extends React.Component{
     })
   }
 
+  oauthGithub(e){
+    e.preventDefault();
+    ipcRenderer.send('OAuthGithub:open');
+  }
+
   render(){
     return(
       <ul className="collapsible" id="collaps" ref={(collapsible) =>  {this.collapsible = collapsible}}>
         <li>
           <div className="collapsible-header valign-wrapper" id="inicio">inicio</div>
           <div className="collapsible-body" id="start">
-            <a className="waves-effect waves-light btn-large social github" id="ghb" onClick={undefined}>
+            <a className="waves-effect waves-light btn-large social github" id="ghb" onClick={this.oauthGithub}>
             <i className="fa fa-github"></i> Sign in with github</a>
           </div>
         </li>
