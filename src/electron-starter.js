@@ -189,7 +189,6 @@ ipcMain.on('OAuthGithub:open', (e) => {
   oauthWindow.webContents.on('will-navigate', (event, url) => {
     handleCallback(url, req_status).then((c) => {
       cookie += c;
-      console.log('Your Token for github is: ', cookie);
       mainWindow.webContents.send('cookie', cookie);
     }).catch(err => {
       console.log(err);

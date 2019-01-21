@@ -5,11 +5,21 @@ import LikeButton from './like_button'
 const electron = window.require('electron')
 const ipcRenderer  = electron.ipcRenderer
 
+const visible = {
+  display: 'inline-block'
+}
+
+const invisible = {
+  display: 'none'
+}
+
 class Collapse extends React.Component{
   constructor(){
     super()
     this.state = {
-      cookie : ''
+      cookie : '',
+      githubBar: visible,
+      urlImg: ''
     }
     this.oauthGithub = this.oauthGithub.bind(this)
   }
@@ -19,10 +29,21 @@ class Collapse extends React.Component{
       inDuration: 800,
       outDuration: 800
     })
-    ipcRenderer.on('cookie', (event, data) => {
+    
+    ipcRenderer.on('cookie', (event, myChocoCookie) => {
       this.setState({
-        cookie: data
+        cookie: myChocoCookie
       })
+      fetch(`https://api.github.com/user?access_token=${myChocoCookie}`)
+      .then(response => {
+        return response.json();
+      }).then(resp => {
+        this.setState({
+          urlImg: resp.avatar_url,
+          githubBar: invisible,
+          altImg: "Github Avatar"
+        })
+      }).catch(error => console.log(error))
     })
   }
 
@@ -36,10 +57,10 @@ class Collapse extends React.Component{
       <ul className="collapsible" id="collaps" ref={(collapsible) =>  {this.collapsible = collapsible}}>
         <li>
           <div className="collapsible-header valign-wrapper" id="inicio">inicio</div>
-          <div className="collapsible-body" id="start">
-            <a className="waves-effect waves-light btn-large social github" id="ghb" onClick={this.oauthGithub}>
+          <div className="collapsible-body">
+            <a className="waves-effect waves-light btn-large social github" id="ghb" style={this.state.githubBar} onClick={this.oauthGithub}>
             <i className="fa fa-github"></i> Sign in with github</a>
-            {this.state.cookie !== '' && <p>{this.state.cookie}</p>}
+            {this.state.githubBar !== "visible" && <img alt={this.state.altImg} src={this.state.urlImg} style={{width: 150, heigth: 150}} />}
           </div>
         </li>
         <li>

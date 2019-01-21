@@ -4,7 +4,6 @@ var thereIsaChocoCookie = function(){
     var data;
     fetch('https://api.github.com/user?access_token='+ myChocoCookie)
     .then(response => {
-      console.log(response);
       return response.json();
     }).then( dat => {
       data = dat;
