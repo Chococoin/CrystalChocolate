@@ -5,7 +5,10 @@ import LikeButton from './like_button'
 class Collapse extends React.Component{
 
   componentDidMount(){
-    M.Collapsible.init(this.collapsible)
+    M.Collapsible.init(this.collapsible, {
+      inDuration: 800,
+      outDuration: 800
+    })
   }
 
   render(){
