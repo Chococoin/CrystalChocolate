@@ -19,6 +19,11 @@ class Collapse extends React.Component{
       inDuration: 800,
       outDuration: 800
     })
+    ipcRenderer.on('cookie', (event, data) => {
+      this.setState({
+        cookie: data
+      })
+    })
   }
 
   oauthGithub(e){
@@ -34,6 +39,7 @@ class Collapse extends React.Component{
           <div className="collapsible-body" id="start">
             <a className="waves-effect waves-light btn-large social github" id="ghb" onClick={this.oauthGithub}>
             <i className="fa fa-github"></i> Sign in with github</a>
+            {this.state.cookie !== '' && <p>{this.state.cookie}</p>}
           </div>
         </li>
         <li>

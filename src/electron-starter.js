@@ -190,6 +190,7 @@ ipcMain.on('OAuthGithub:open', (e) => {
     handleCallback(url, req_status).then((c) => {
       cookie += c;
       console.log('Your Token for github is: ', cookie);
+      mainWindow.webContents.send('cookie', cookie);
     }).catch(err => {
       console.log(err);
     });
@@ -204,15 +205,6 @@ ipcMain.on('OAuthGithub:open', (e) => {
       oauthWindow = null;
   }, false);
 });
-
-  // Wait for the user's github login
-var cookieListener = setInterval(()=>{
-  if (cookie !== ''){
-    mainWindow.webContents.send('cookie', cookie);
-    clearInterval(cookieListener);
-    cookie = null;
-  }
-}, 3000);
 
 app.setName('CrystalChocolate');
 
