@@ -88,7 +88,7 @@ ipcMain.on('user:add', (e, data)=> {
                 console.log('token: ', 'Bearer ' + token);
               });
           } else {
-            console.log('Fail: Wrong Password');
+            console.log('Fail: Wrong Password'); TODO// SEND as Props to Login.js
           }
       });
     })
