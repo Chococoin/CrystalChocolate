@@ -1,8 +1,8 @@
 .DS_Store
+.gitignore
 /node_modules
 /package-lock.json
 /release-builds
 /config/mongodb_access.js
 /config/passport.js
 /config/key.js
-/src/components/Login.js
