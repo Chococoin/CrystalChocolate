@@ -13,6 +13,9 @@ const validateLoginInput = require('../validation/login');
 const githubKey = require('../keys/strategy-keys');
 const random_status = require('../helpers/random_status');
 const handleCallback = require('../helpers/handleCallback');
+const KrakenClient = require('../helpers/kraken');
+const keyKraken = require('../keys/key.js');
+const secret = require('../keys/secret.js');
 
 const { app, BrowserWindow, Menu, ipcMain } = electron;
 
@@ -24,6 +27,7 @@ let mainWindow;
 let loginWindow;
 let registerWindow;
 let cookie = '';
+let message = "null";
 
 const startUrl = process.env.ELECTRON_START_URL || url.format({
                  pathname: path.join(__dirname, '/../build/index.html'),
@@ -40,6 +44,21 @@ app.on('ready', ()=>{
 
   const mainMenu = Menu.buildFromTemplate(mainMenuTemplate);
   Menu.setApplicationMenu(mainMenu);
+});
+
+ipcMain.on('bank:request', (e) =>{
+
+  const kraken = new KrakenClient(keyKraken, secret);
+
+  function krakenApiCall(){
+    kraken.api('Balance')
+    .then(res => {
+      message = res.result.ZEUR;
+      mainWindow.send('kraken', message);
+    }).catch(err => console.log(err));
+  }
+
+  krakenApiCall()
 });
 
 // Open loginWindow from mainWindow

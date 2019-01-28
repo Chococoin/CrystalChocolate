@@ -19,9 +19,11 @@ class Collapse extends React.Component{
     this.state = {
       cookie : '',
       githubBar: visible,
-      urlImg: ''
+      urlImg: '',
+      founds: ''
     }
     this.oauthGithub = this.oauthGithub.bind(this)
+    this.krakenRequest = this.krakenRequest.bind(this)
   }
 
   componentDidMount(){
@@ -45,6 +47,17 @@ class Collapse extends React.Component{
         })
       }).catch(error => console.log(error))
     })
+
+    ipcRenderer.on('kraken', (event, amount) =>{
+      this.setState({
+        founds: amount
+      })
+    })
+  }
+
+  krakenRequest(e){
+    e.preventDefault();
+    ipcRenderer.send('bank:request');
   }
 
   oauthGithub(e){
@@ -76,10 +89,10 @@ class Collapse extends React.Component{
           <div className="collapsible-body valign-wrapper"><span>Lorem ipsum dolor sit amet.</span></div>
         </li>
         <li>
-          <div className="collapsible-header valign-wrapper" id="banco">Banco</div>
+          <div className="collapsible-header valign-wrapper" onClick={this.krakenRequest} id="banco">Banco</div>
           <div className="collapsible-body" id="banco-body">
             <h3 className="col s4 center"> EUR </h3>
-            <p id="tag" className="col s4 center"><span>€ </span></p>
+            <p className="col s4 center"> {this.state.founds === '' ? 'Loading ...' : (this.state.founds )}</p>
           </div>
         </li>
         <li>
