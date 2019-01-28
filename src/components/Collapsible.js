@@ -1,6 +1,7 @@
 import React from 'react'
 import M from '../../js/materialize.js'
 import LikeButton from './like_button'
+import Bankwheal from './Bankwheal'
 
 const electron = window.require('electron')
 const ipcRenderer  = electron.ipcRenderer
@@ -92,7 +93,7 @@ class Collapse extends React.Component{
           <div className="collapsible-header valign-wrapper" onClick={this.krakenRequest} id="banco">Banco</div>
           <div className="collapsible-body" id="banco-body">
             <h3 className="col s4 center"> EUR </h3>
-            <p className="col s4 center"> {this.state.founds === '' ? 'Loading ...' : (this.state.founds )}</p>
+            <p className="col s4 center"> {this.state.founds === '' ? <Bankwheal /> : (this.state.founds )}</p>
           </div>
         </li>
         <li>
