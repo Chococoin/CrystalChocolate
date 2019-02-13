@@ -28,6 +28,7 @@ let loginWindow;
 let registerWindow;
 let cookie = '';
 let message = "null";
+let loading;
 
 const startUrl = process.env.ELECTRON_START_URL || url.format({
                  pathname: path.join(__dirname, '/../build/index.html'),
@@ -36,8 +37,17 @@ const startUrl = process.env.ELECTRON_START_URL || url.format({
                 });
 
 app.on('ready', ()=>{
-  mainWindow = new BrowserWindow({ width: 1200, height: 850, backgroundColor: '#260b12' });
-  mainWindow.loadURL(startUrl);
+  loading = new BrowserWindow({width: 400, height:300, frame:false, show:false}); //TODO: ADD A SPINNER
+  mainWindow = new BrowserWindow({ show: false, width: 1200, height: 850, backgroundColor: '#260b12' });
+  loading.once('show', () =>{
+    mainWindow.on('ready-to-show', () => {
+      mainWindow.show();
+      loading.hide();
+      loading.close();
+    })    
+    mainWindow.loadURL(startUrl);
+  });
+  loading.show();
   mainWindow.on('closed', function(){
     app.quit();
   });
