@@ -93,7 +93,7 @@ class Collapse extends React.Component{
           <div className="collapsible-header valign-wrapper" onClick={this.krakenRequest} id="banco">Banco</div>
           <div className="collapsible-body" id="banco-body">
             <h3 className="col s4 center"> EUR </h3>
-            <p className="col s4 center"> {this.state.founds === '' ? <Bankwheal /> : (this.state.founds )}</p>
+            <p className="col s4 center"> {this.state.founds === '' ? <Bankwheal /> : '€ ' + (this.state.founds) }</p>
           </div>
         </li>
         <li>
