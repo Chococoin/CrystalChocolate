@@ -36,7 +36,7 @@ const startUrl = process.env.ELECTRON_START_URL || url.format({
                 });
 
 app.on('ready', ()=>{
-  mainWindow = new BrowserWindow({ width: 1200, height: 850 });
+  mainWindow = new BrowserWindow({ width: 1200, height: 850, backgroundColor: '#260b12' });
   mainWindow.loadURL(startUrl);
   mainWindow.on('closed', function(){
     app.quit();
