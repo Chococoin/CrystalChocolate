@@ -38,6 +38,8 @@
   },
   "devDependencies": {
     "electron-ejs": "^1.2.0",
-    "electron-packager": "^12.2.0"
+    "electron-packager": "^12.2.0",
+    "truffle-contract": "^3.0.4",
+    "web3": "^0.20.5"
   }
 }
