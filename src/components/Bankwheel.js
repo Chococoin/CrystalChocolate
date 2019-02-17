@@ -1,7 +1,7 @@
 import React from 'react'
-import wheal from '../../img/Bankwheal.svg'
+import wheel from '../../img/Bankwheel.svg'
 
-const Bankwheal = () => {
+const Bankwheel = () => {
 
 	const size = {
 		width: 40,
@@ -10,9 +10,9 @@ const Bankwheal = () => {
 
 	return (
 		<div>
-			<img style={size} src={wheal} alt="Loading wheal"/>
+			<img style={size} src={wheel} alt="Loading wheel"/>
 		</div>
 	)
 }
 
-export default Bankwheal
+export default Bankwheel
