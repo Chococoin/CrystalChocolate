@@ -25,6 +25,7 @@
     "crypto": "^1.0.1",
     "ejs": "^2.6.1",
     "electron": "2.0.14",
+    "ethers": "^4.0.26",
     "foreman": "^3.0.1",
     "got": "^9.3.2",
     "jsonwebtoken": "^8.4.0",
@@ -34,6 +35,7 @@
     "react-dom": "^16.7.0",
     "react-scripts": "0.8.5",
     "superagent": "^4.1.0",
+    "truffle-hdwallet-provider": "^1.0.5",
     "validator": "^10.9.0"
   },
   "devDependencies": {

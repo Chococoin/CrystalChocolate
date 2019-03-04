@@ -6,3 +6,5 @@
 /config/mongodb_access.js
 /config/passport.js
 /config/key.js
+.vscode/
+/dapp/build/contracts/*

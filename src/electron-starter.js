@@ -71,6 +71,28 @@ ipcMain.on('bank:request', (e) =>{
   krakenApiCall()
 });
 
+// Comunicate with deployed Test contract
+ipcMain.on('chain:request', (e) => {
+  const ethers = require('ethers');
+  const Test = require('./contracts/Test.json');
+  const ABI = Test.abi;
+  const contractNumber = Test.networks[5777].address;
+  const privateKey ='488954449c0b5ef75c247882f2c103110e2962e7883ee40d617cc5608dde3c61';
+  const url = "http://localhost:7545";
+  const provider = new ethers.providers.JsonRpcProvider(url);
+  const wallet = new ethers.Wallet(privateKey, provider);
+  const contract = new ethers.Contract(contractNumber, ABI, provider);  
+
+  function callInfuraApi(){
+    let messagePromise = 'From Variable init';
+    contract.message().then(res => {
+      messagePromise = res;
+      mainWindow.send('infura', messagePromise);
+    }).catch(err => console.log(err))
+  }
+  callInfuraApi();
+})
+
 // Open loginWindow from mainWindow
 ipcMain.on('signIn:open', (e)=> {
   loginWindow = new BrowserWindow({ width: 600, height: 400 });

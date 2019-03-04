@@ -2,6 +2,7 @@ import React from 'react'
 import M from '../../js/materialize.js'
 import LikeButton from './like_button'
 import Bankwheel from './Bankwheel'
+//import DappApi from './DappApi'
 
 const electron = window.require('electron')
 const ipcRenderer  = electron.ipcRenderer
@@ -21,7 +22,8 @@ class Collapse extends React.Component{
       cookie : '',
       githubBar: visible,
       urlImg: '',
-      founds: ''
+      founds: '',
+      message: 'From Collapsible'
     }
     this.oauthGithub = this.oauthGithub.bind(this)
     this.krakenRequest = this.krakenRequest.bind(this)
@@ -50,10 +52,22 @@ class Collapse extends React.Component{
     })
 
     ipcRenderer.on('kraken', (event, amount) =>{
+      console.log(amount);
       this.setState({
         founds: amount
       })
     })
+
+    ipcRenderer.on('infura', (event, msg) =>{
+      this.setState({
+        message: msg
+      })
+    })
+  }
+
+  infuraRequest(e){
+    e.preventDefault();
+    ipcRenderer.send('chain:request');
   }
 
   krakenRequest(e){
@@ -82,8 +96,8 @@ class Collapse extends React.Component{
           <div className="collapsible-body"><LikeButton /></div>
         </li>
         <li>
-          <div className="collapsible-header valign-wrapper" id="historia">historia</div>
-          <div className="collapsible-body valign-wrapper"><span>Lorem ipsum dolor sit amet.</span></div>
+          <div className="collapsible-header valign-wrapper" onClick={this.infuraRequest} id="historia">historia</div>
+          <div className="collapsible-body valign-wrapper"><span>{this.state.message}</span></div>
         </li>
         <li>
           <div className="collapsible-header valign-wrapper" id="fabrica">Choco Fábrica</div>
