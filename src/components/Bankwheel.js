@@ -9,9 +9,9 @@ const Bankwheel = () => {
 	}
 
 	return (
-		<div>
+		<React.Fragment>
 			<img style={size} src={wheel} alt="Loading wheel"/>
-		</div>
+		</React.Fragment>
 	)
 }
 

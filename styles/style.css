@@ -129,6 +129,11 @@ body{
   padding: 0.8rem;
 }
 
+#fabrica-body {
+  color: #fff;
+  padding: 0.8rem;
+}
+
 #soporte{
   background-color: #0072BB;
   border-bottom-width: 0px;

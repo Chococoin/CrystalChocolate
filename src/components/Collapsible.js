@@ -2,7 +2,7 @@ import React from 'react'
 import M from '../../js/materialize.js'
 import LikeButton from './like_button'
 import Bankwheel from './Bankwheel'
-//import DappApi from './DappApi'
+import DappApi from './DappApi'
 
 const electron = window.require('electron')
 const ipcRenderer  = electron.ipcRenderer
@@ -23,7 +23,6 @@ class Collapse extends React.Component{
       githubBar: visible,
       urlImg: '',
       founds: '',
-      message: 'From Collapsible'
     }
     this.oauthGithub = this.oauthGithub.bind(this)
     this.krakenRequest = this.krakenRequest.bind(this)
@@ -52,15 +51,8 @@ class Collapse extends React.Component{
     })
 
     ipcRenderer.on('kraken', (event, amount) =>{
-      console.log(amount);
       this.setState({
         founds: amount
-      })
-    })
-
-    ipcRenderer.on('infura', (event, msg) =>{
-      this.setState({
-        message: msg
       })
     })
   }
@@ -96,12 +88,15 @@ class Collapse extends React.Component{
           <div className="collapsible-body"><LikeButton /></div>
         </li>
         <li>
-          <div className="collapsible-header valign-wrapper" onClick={this.infuraRequest} id="historia">historia</div>
-          <div className="collapsible-body valign-wrapper"><span>{this.state.message}</span></div>
+          <div className="collapsible-header valign-wrapper" id="historia">historia</div>
+          <div className="collapsible-body valign-wrapper">This is Fabulous and Delicious Story</div>
         </li>
         <li>
-          <div className="collapsible-header valign-wrapper" id="fabrica">Choco Fábrica</div>
-          <div className="collapsible-body valign-wrapper"><span>Lorem ipsum dolor sit amet.</span></div>
+          <div className="collapsible-header valign-wrapper" onClick={this.infuraRequest} id="fabrica">Choco Fábrica</div>
+          <div className="collapsible-body" id="fabrica-body">
+            <h3 className="col s4 center"> ChocoTokens </h3>
+            <p className="col s4 center"> <DappApi /></p>
+          </div>
         </li>
         <li>
           <div className="collapsible-header valign-wrapper" onClick={this.krakenRequest} id="banco">Banco</div>

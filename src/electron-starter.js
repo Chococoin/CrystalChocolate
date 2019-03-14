@@ -74,19 +74,20 @@ ipcMain.on('bank:request', (e) =>{
 // Comunicate with deployed Test contract
 ipcMain.on('chain:request', (e) => {
   const ethers = require('ethers');
-  const Test = require('./contracts/Test.json');
-  const ABI = Test.abi;
-  const contractNumber = Test.networks[5777].address;
+  const ChocoToken = require('./contracts/ChocoToken.json');
+  const ABI = ChocoToken.abi;
+  const contractNumber = ChocoToken.networks[4].address;
   const privateKey ='488954449c0b5ef75c247882f2c103110e2962e7883ee40d617cc5608dde3c61';
-  const url = "http://localhost:7545";
+  const url = "https://rinkeby.infura.io/v3/13eb2f7a24d048379237d1a85912203c";
   const provider = new ethers.providers.JsonRpcProvider(url);
   const wallet = new ethers.Wallet(privateKey, provider);
   const contract = new ethers.Contract(contractNumber, ABI, provider);  
 
   function callInfuraApi(){
     let messagePromise = 'From Variable init';
-    contract.message().then(res => {
+    contract.balanceOf(wallet.address).then(res => {
       messagePromise = res;
+      console.log(messagePromise)
       mainWindow.send('infura', messagePromise);
     }).catch(err => console.log(err))
   }
