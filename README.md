@@ -49,4 +49,4 @@ We're working thinking that our final customers will not be passives consumers. 
 
 ### DeepWiki
 
-[![Tony](https://deepwiki.com/Chococoin/CrystalChocolate/4.2-build-and-deployment)
+![Tony](https://deepwiki.com/Chococoin/CrystalChocolate/4.2-build-and-deployment)
